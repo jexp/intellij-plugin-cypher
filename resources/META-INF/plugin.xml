@@ -1,0 +1,31 @@
+<idea-plugin version="2">
+  <id>io.graphgeeks.intellij.plugin.cypher</id>
+  <name>Cypher</name>
+  <version>0.0.1</version>
+  <vendor email="dmitry.vrublevsky@graphgeeks.io" url="https://graphgeeks.io">GraphGeeks</vendor>
+
+  <description><![CDATA[
+      Cypher query language support.
+    ]]></description>
+
+  <change-notes><![CDATA[
+      0.0.1 Initial
+    ]]>
+  </change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="141.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <depends>com.intellij.modules.lang</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <fileTypeFactory implementation="io.graphgeeks.intellij.plugin.cypher.CypherFileTypeFactory"/>
+    <!-- Add your extensions here -->
+  </extensions>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+</idea-plugin>
