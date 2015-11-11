@@ -1,0 +1,30 @@
+plugins {
+  id "org.jetbrains.intellij" version "0.0.27"
+}
+
+apply plugin: 'org.jetbrains.intellij'
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+intellij {
+    version '15.0'
+    pluginName 'Cypher'
+    downloadSources true
+
+    publish {
+        pluginId 'io.graphgeeks.intellij.plugin.cypher'
+        username ''
+        password ''
+        channel 'nightly'
+    }
+}
+
+dependencies {
+    compile 'org.neo4j:neo4j-cypher-frontend-2.3:2.3.0'
+}

@@ -1,6 +1,8 @@
-package io.graphgeeks.intellij.plugin.cypher;
+package io.graphgeeks.intellij.plugin.cypher.file;
 
 import com.intellij.openapi.fileTypes.LanguageFileType;
+import io.graphgeeks.intellij.plugin.cypher.CypherIcons;
+import io.graphgeeks.intellij.plugin.cypher.CypherLanguage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
