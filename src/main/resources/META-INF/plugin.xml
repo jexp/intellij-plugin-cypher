@@ -20,8 +20,10 @@
   <depends>com.intellij.modules.lang</depends>
 
   <extensions defaultExtensionNs="com.intellij">
-    <fileTypeFactory implementation="io.graphgeeks.intellij.plugin.cypher.file.CypherFileTypeFactory"/>
     <!-- Add your extensions here -->
+
+    <fileTypeFactory implementation="io.graphgeeks.intellij.plugin.cypher.file.CypherFileTypeFactory"/>
+    <lang.parserDefinition language="Cypher" implementationClass="io.graphgeeks.intellij.plugin.cypher.parser.CypherParserDefinition"/>
   </extensions>
 
   <actions>

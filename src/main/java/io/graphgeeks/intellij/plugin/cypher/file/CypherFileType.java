@@ -22,7 +22,7 @@ public class CypherFileType extends LanguageFileType{
     @NotNull
     @Override
     public String getName() {
-        return "Cypher file";
+        return "Cypher";
     }
 
     @NotNull
