@@ -5,6 +5,8 @@ import com.intellij.openapi.fileTypes.FileTypeFactory;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * Associate Cypher file with extension.
+ *
  * @author dmitry.vrublevsky@graphgeeks.io
  */
 public class CypherFileTypeFactory extends FileTypeFactory {

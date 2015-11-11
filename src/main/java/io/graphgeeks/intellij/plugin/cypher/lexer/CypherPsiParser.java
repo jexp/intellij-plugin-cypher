@@ -6,7 +6,14 @@ import com.intellij.lang.PsiParser;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 
-public class CypherParser implements PsiParser {
+/**
+ * Build AST tree from parsed tokens.
+ *
+ * TODO: What really we do here?
+ *
+ * @author dmitry.vrublevsky@graphgeeks.io
+ */
+public class CypherPsiParser implements PsiParser {
 
     @NotNull
     @Override

@@ -15,10 +15,15 @@ import com.intellij.psi.tree.TokenSet;
 import io.graphgeeks.intellij.plugin.cypher.CypherLanguage;
 import io.graphgeeks.intellij.plugin.cypher.file.CypherFile;
 import io.graphgeeks.intellij.plugin.cypher.lexer.CypherLexer;
-import io.graphgeeks.intellij.plugin.cypher.lexer.CypherParser;
+import io.graphgeeks.intellij.plugin.cypher.lexer.CypherPsiParser;
 import io.graphgeeks.intellij.plugin.cypher.psi.CypherTypes;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Definer lexer and parser.
+ *
+ * @author dmitry.vrublevsky@graphgeeks.io
+ */
 public class CypherParserDefinition implements ParserDefinition {
 
     public static final TokenSet WHITESPACE = TokenSet.create(TokenType.WHITE_SPACE);
@@ -35,7 +40,7 @@ public class CypherParserDefinition implements ParserDefinition {
 
     @Override
     public PsiParser createParser(Project project) {
-        return new CypherParser();
+        return new CypherPsiParser();
     }
 
     @Override

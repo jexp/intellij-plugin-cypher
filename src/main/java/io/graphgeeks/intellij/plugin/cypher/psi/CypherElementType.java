@@ -6,6 +6,8 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * TODO: Determine purpose of this token.
+ *
  * @author dmitry.vrublevsky@graphgeeks.io
  */
 public class CypherElementType extends IElementType {

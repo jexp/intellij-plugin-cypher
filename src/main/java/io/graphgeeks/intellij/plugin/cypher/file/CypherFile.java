@@ -9,6 +9,11 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.Icon;
 
+/**
+ * Describes Cypher file.
+ *
+ * @author dmitry.vrublevsky@graphgeeks.io
+ */
 public class CypherFile extends PsiFileBase {
 
     public CypherFile(@NotNull FileViewProvider viewProvider) {

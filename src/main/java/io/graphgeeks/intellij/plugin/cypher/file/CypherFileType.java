@@ -9,9 +9,11 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.Icon;
 
 /**
+ * Describe Cypher file basic metadata.
+ *
  * @author dmitry.vrublevsky@graphgeeks.io
  */
-public class CypherFileType extends LanguageFileType{
+public class CypherFileType extends LanguageFileType {
 
     public static final CypherFileType INSTANCE = new CypherFileType();
 

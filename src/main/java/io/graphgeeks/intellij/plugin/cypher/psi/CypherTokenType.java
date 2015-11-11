@@ -6,6 +6,8 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * Represent Cypher tokens.
+ *
  * @author dmitry.vrublevsky@graphgeeks.io
  */
 public class CypherTokenType extends IElementType {

@@ -18,6 +18,9 @@ import static scala.collection.JavaConversions.asJavaCollection;
 import static scala.collection.JavaConversions.asJavaIterator;
 
 /**
+ * Just some random wiggling with Neo4j cypher parsers.
+ * No tests are written in fact.
+ *
  * @author dmitry.vrublevsky@graphgeeks.io
  */
 public class CypherLanguageTest {

@@ -4,6 +4,8 @@ import com.intellij.lang.Language;
 import com.intellij.lexer.Lexer;
 import com.intellij.lexer.LexerPosition;
 import com.intellij.psi.tree.IElementType;
+import io.graphgeeks.intellij.plugin.cypher.lexer.tokenizer.TokenParser;
+import io.graphgeeks.intellij.plugin.cypher.lexer.util.CypherLexerPosition;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -11,6 +13,8 @@ import org.jetbrains.annotations.Nullable;
 import static java.lang.String.format;
 
 /**
+ * Parse input into tokens.
+ *
  * @author dmitry.vrublevsky@graphgeeks.io
  */
 public class CypherLexer extends Lexer {
@@ -18,6 +22,7 @@ public class CypherLexer extends Lexer {
     private static final IElementType EMPTY_TOKEN_TYPE = new IElementType("empty_token", Language.ANY);
 
     private static final Logger logger = Logger.getLogger(CypherLexer.class);
+    private final TokenParser tokenParser;
     private CharSequence buffer;
     private int startOffset;
     private int endOffset;
@@ -25,6 +30,7 @@ public class CypherLexer extends Lexer {
 
     public CypherLexer() {
         super();
+        tokenParser = new TokenParser();
     }
 
     @Override

@@ -1,7 +1,12 @@
-package io.graphgeeks.intellij.plugin.cypher.lexer;
+package io.graphgeeks.intellij.plugin.cypher.lexer.util;
 
 import com.intellij.lexer.LexerPosition;
 
+/**
+ * Lexer position.
+ *
+ * @author dmitry.vrublevsky@graphgeeks.io
+ */
 public class CypherLexerPosition implements LexerPosition {
 
     private final int offset;
