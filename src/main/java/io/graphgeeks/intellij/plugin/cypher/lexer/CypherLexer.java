@@ -4,7 +4,8 @@ import com.intellij.lang.Language;
 import com.intellij.lexer.Lexer;
 import com.intellij.lexer.LexerPosition;
 import com.intellij.psi.tree.IElementType;
-import io.graphgeeks.intellij.plugin.cypher.lexer.tokenizer.TokenParser;
+import io.graphgeeks.intellij.plugin.cypher.lexer.token.TokenList;
+import io.graphgeeks.intellij.plugin.cypher.lexer.token.TokenParser;
 import io.graphgeeks.intellij.plugin.cypher.lexer.util.CypherLexerPosition;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -28,6 +29,9 @@ public class CypherLexer extends Lexer {
     private int endOffset;
     private int currentOffset;
 
+    private TokenList currentTokenList;
+    private int currentTokenPosition;
+
     public CypherLexer() {
         super();
         tokenParser = new TokenParser();
@@ -35,12 +39,16 @@ public class CypherLexer extends Lexer {
 
     @Override
     public void start(@NotNull CharSequence buffer, int startOffset, int endOffset, int initialState) {
+//        String workBuffer = String.valueOf(buffer.subSequence(startOffset, endOffset));
+
         logger.info(format("Start lexer at %s, %s, %s", startOffset, endOffset, initialState));
         logger.info(format("File content: [%s]", buffer));
         this.buffer = buffer;
         this.startOffset = startOffset;
         this.endOffset = endOffset;
         this.currentOffset = startOffset;
+
+//        currentTokenList = tokenParser.parse(workBuffer);
     }
 
     @Override
