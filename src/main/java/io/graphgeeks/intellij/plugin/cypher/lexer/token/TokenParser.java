@@ -6,8 +6,10 @@ import org.parboiled.parserunners.RecoveringParseRunner;
 import org.parboiled.support.ParsingResult;
 import scala.collection.Seq;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import static io.graphgeeks.intellij.plugin.cypher.util.ListUtils.getNext;
 import static scala.collection.JavaConversions.seqAsJavaList;
 
 /**
@@ -22,7 +24,7 @@ public class TokenParser {
     public TokenParser() {
     }
 
-    public TokenList parse(CharSequence buffer) {
+    public List<Token> parse(CharSequence buffer) {
         // Convert buffer to sting
         String input = String.valueOf(buffer);
 
@@ -31,7 +33,22 @@ public class TokenParser {
         List<Statement> statements = seqAsJavaList(parsingResult.resultValue);
 
         // Wrap parser output into tokenizer
-        return TokenList.from(input, statements);
+        return transformIntoTokens(input, statements);
+    }
+
+    private List<Token> transformIntoTokens(String source, List<Statement> statements) {
+        final List<Token> tokens = new ArrayList<>();
+
+        RootToken rootToken = new RootToken(source);
+        Token prevToken = null;
+
+        for (int i = 0; i < statements.size(); i++) {
+            Token currentToken = Tokens.tokenFor(statements.get(i));
+            currentToken.navigate(tokens::add, rootToken, prevToken, getNext(statements, i));
+            prevToken = currentToken;
+        }
+
+        return tokens;
     }
 
     private RecoveringParseRunner<Seq<Statement>> runner() {

@@ -1,5 +1,6 @@
 package io.graphgeeks.intellij.plugin.cypher.lexer.token;
 
+import io.graphgeeks.intellij.plugin.cypher.psi.CypherTokenType;
 import org.neo4j.cypher.internal.frontend.v2_3.ast.ASTNode;
 
 /**
@@ -16,6 +17,14 @@ public abstract class Token {
                                   Token prev, ASTNode next);
 
     public abstract ASTNode getUnderlyingAstNode();
+
+    public String getName() {
+        return getUnderlyingAstNode().productPrefix();
+    }
+
+    public CypherTokenType getTokenType() {
+        return CypherTokenType.get(getName());
+    }
 
     public TokenSize getSize() {
         if (tokenSize == null) {

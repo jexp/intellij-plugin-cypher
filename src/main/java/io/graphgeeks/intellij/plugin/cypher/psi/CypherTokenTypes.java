@@ -9,7 +9,7 @@ import com.intellij.psi.tree.IElementType;
  *
  * @author dmitry.vrublevsky@graphgeeks.io
  */
-public interface CypherTypes {
+public interface CypherTokenTypes {
 
     IElementType LINE_COMMENT = new CypherTokenType("LINE_COMMENT");
 

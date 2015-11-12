@@ -3,6 +3,8 @@ package io.graphgeeks.intellij.plugin.cypher.lexer.token;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 /**
  * TODO: Description
  *
@@ -19,10 +21,9 @@ public class TokenParserTest {
 
     @Test
     public void testParseSimpleQuery() throws Exception {
-        TokenList tokenList = parser.parse("MATCH (n) RETURN n;MATCH (n) RETURN n;");
-
-        while (tokenList.hasNext()) {
-            System.out.println(tokenList.next());
-        }
+        List<Token> tokenList = parser.parse("MATCH (n) \n" +
+                "// some comments \n" +
+                "RETURN n;");
+        tokenList.forEach(System.out::println);
     }
 }

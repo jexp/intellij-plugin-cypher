@@ -16,7 +16,7 @@ import io.graphgeeks.intellij.plugin.cypher.CypherLanguage;
 import io.graphgeeks.intellij.plugin.cypher.file.CypherFile;
 import io.graphgeeks.intellij.plugin.cypher.lexer.CypherLexer;
 import io.graphgeeks.intellij.plugin.cypher.lexer.CypherPsiParser;
-import io.graphgeeks.intellij.plugin.cypher.psi.CypherTypes;
+import io.graphgeeks.intellij.plugin.cypher.psi.CypherTokenTypes;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 public class CypherParserDefinition implements ParserDefinition {
 
     public static final TokenSet WHITESPACE = TokenSet.create(TokenType.WHITE_SPACE);
-    public static final TokenSet COMMENT = TokenSet.create(CypherTypes.LINE_COMMENT);
+    public static final TokenSet COMMENT = TokenSet.create(CypherTokenTypes.LINE_COMMENT);
 
     public static final IFileElementType FILE =
             new IFileElementType(Language.findInstance(CypherLanguage.class));
@@ -69,7 +69,7 @@ public class CypherParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public PsiElement createElement(ASTNode node) {
-        return CypherTypes.Factory.createElement(node);
+        return CypherTokenTypes.Factory.createElement(node);
     }
 
     @Override
