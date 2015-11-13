@@ -41,6 +41,6 @@ public class CypherTokenType extends IElementType {
 
     @Override
     public String toString() {
-        return "CypherTokenType::" + super.toString();
+        return "CypherTokenType [" + super.toString() + "]";
     }
 }

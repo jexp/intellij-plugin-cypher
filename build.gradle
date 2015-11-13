@@ -1,12 +1,14 @@
 plugins {
-  id "org.jetbrains.intellij" version "0.0.27"
+    id "org.jetbrains.intellij" version "0.0.27"
 }
 
 apply plugin: 'org.jetbrains.intellij'
-apply plugin: 'java'
+apply plugin: 'scala'
+apply plugin: 'idea'
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 sourceCompatibility = 1.8
@@ -26,5 +28,7 @@ intellij {
 }
 
 dependencies {
+    compile "org.scala-lang:scala-library:2.11.7"
+    compile "org.scala-lang:scala-compiler:2.11.7"
     compile 'org.neo4j:neo4j-cypher-compiler-2.3:2.3.0'
 }

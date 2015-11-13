@@ -1,16 +1,15 @@
 package io.graphgeeks.intellij.plugin.cypher.lexer.token;
 
+import io.grapgeeks.intellij.plugin.cypher.CypherParserWrapper;
 import org.neo4j.cypher.internal.frontend.v2_3.ast.Statement;
-import org.neo4j.cypher.internal.frontend.v2_3.parser.CypherParser;
-import org.parboiled.parserunners.RecoveringParseRunner;
-import org.parboiled.support.ParsingResult;
+import org.parboiled.Node;
+import org.parboiled.errors.ParseError;
+import org.parboiled.scala.ParsingResult;
+import scala.collection.JavaConversions;
 import scala.collection.Seq;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static io.graphgeeks.intellij.plugin.cypher.util.ListUtils.getNext;
-import static scala.collection.JavaConversions.seqAsJavaList;
 
 /**
  * Glue between Neo4j Cypher parser and expected result.
@@ -19,47 +18,47 @@ import static scala.collection.JavaConversions.seqAsJavaList;
  */
 public class TokenParser {
 
-    private final ThreadLocal<RecoveringParseRunner<Seq<Statement>>> runnerHolder = new ThreadLocal<>();
-
     public TokenParser() {
     }
 
-    public List<Token> parse(CharSequence buffer) {
-        // Convert buffer to sting
-        String input = String.valueOf(buffer);
-
+    public List<Token> parse(String input) {
         // Get parser output from Neo4j Cypher parser
-        ParsingResult<Seq<Statement>> parsingResult = runner().run(input);
-        List<Statement> statements = seqAsJavaList(parsingResult.resultValue);
+        ParsingResult<Seq<Statement>> parsingResult = CypherParserWrapper.parse(input);
 
-        // Wrap parser output into tokenizer
-        return transformIntoTokens(input, statements);
-    }
+        List<Token> tokens = new ArrayList<>();
+        if (parsingResult.parseErrors().isEmpty()) {
+            collect(parsingResult.parseTreeRoot(), tokens);
+        } else {
+            List<ParseError> parseErrors = JavaConversions.seqAsJavaList(parsingResult.parseErrors());
+            // Take only first error for now.
+            // todo: get multiple
+            ParseError parseError = parseErrors.get(0);
 
-    private List<Token> transformIntoTokens(String source, List<Statement> statements) {
-        final List<Token> tokens = new ArrayList<>();
+            int errorStart = parseError.getStartIndex();
+            int errorEnd = parseError.getEndIndex();
+            int startOffset = 0;
+            int endOffset = input.length() - 1;
 
-        RootToken rootToken = new RootToken(source);
-        Token prevToken = null;
-
-        for (int i = 0; i < statements.size(); i++) {
-            Token currentToken = Tokens.tokenFor(statements.get(i));
-            currentToken.navigate(tokens::add, rootToken, prevToken, getNext(statements, i));
-            prevToken = currentToken;
+            if (errorStart > startOffset) {
+                tokens.add(Token.createAnyText(startOffset, errorStart - 1));
+            }
+            tokens.add(Token.createError(parseError));
+            if (errorEnd < endOffset) {
+                tokens.add(Token.createAnyText(errorEnd + 1, endOffset));
+            }
         }
-
         return tokens;
     }
 
-    private RecoveringParseRunner<Seq<Statement>> runner() {
-        RecoveringParseRunner<Seq<Statement>> runner = runnerHolder.get();
-        if (runner == null) {
-            runner = org.parboiled.scala.parserunners.RecoveringParseRunner
-                    .apply(CypherParser.Statements())
-                    .inner();
-            runnerHolder.set(runner);
+    private void collect(Node<?> node, List<Token> tokens) {
+        if (ParseNode.shouldStop(node)) {
+            tokens.add(Token.create(node));
+        } else {
+            if (!node.getChildren().isEmpty()) {
+                for (Node<?> childNode : node.getChildren()) {
+                    collect(childNode, tokens);
+                }
+            }
         }
-
-        return runner;
     }
 }

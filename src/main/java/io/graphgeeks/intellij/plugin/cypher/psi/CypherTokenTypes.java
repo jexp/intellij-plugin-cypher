@@ -12,6 +12,8 @@ import com.intellij.psi.tree.IElementType;
 public interface CypherTokenTypes {
 
     IElementType LINE_COMMENT = new CypherTokenType("LINE_COMMENT");
+    IElementType ANY_TEXT = new CypherTokenType("ANY_TEXT");
+    IElementType ERROR = new CypherTokenType("ERROR");
 
     class Factory {
         public static PsiElement createElement(ASTNode node) {

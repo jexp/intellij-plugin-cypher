@@ -56,7 +56,7 @@ public class CypherLexer extends Lexer {
             currentTokenList = tokenParser.parse(String.valueOf(buffer));
             currentToken = getSafe(currentTokenList, currentTokenPosition);
             if (currentToken != null) {
-                currentOffset = currentToken.getSize().getStartOffset();
+                currentOffset = currentToken.getStartOffset();
             }
         }
     }
@@ -78,19 +78,19 @@ public class CypherLexer extends Lexer {
 
     @Override
     public int getTokenStart() {
-        return currentToken.getSize().getStartOffset();
+        return currentToken.getStartOffset();
     }
 
     @Override
     public int getTokenEnd() {
-        return currentToken.getSize().getEndOffset();
+        return currentToken.getEndOffset();
     }
 
     @Override
     public void advance() {
         currentToken = getSafe(currentTokenList, currentTokenPosition + 1);
         if (currentToken != null) {
-            currentOffset = currentToken.getSize().getStartOffset();
+            currentOffset = currentToken.getStartOffset();
             currentTokenPosition++;
         } else {
             currentOffset = endOffset;
@@ -107,7 +107,7 @@ public class CypherLexer extends Lexer {
     public void restore(@NotNull LexerPosition position) {
         currentTokenPosition = position.getState();
         currentToken = currentTokenList.get(position.getState());
-        currentOffset = currentToken.getSize().getStartOffset();
+        currentOffset = currentToken.getStartOffset();
     }
 
     @NotNull
