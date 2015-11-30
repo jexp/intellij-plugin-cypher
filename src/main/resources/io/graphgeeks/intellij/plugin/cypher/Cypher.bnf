@@ -1,0 +1,20 @@
+{
+  parserClass="io.graphgeeks.intellij.plugin.cypher.parser.CypherParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Cypher"
+  psiImplClassSuffix="Impl"
+  psiPackage="io.graphgeeks.intellij.plugin.cypher.psi"
+  psiImplPackage="io.graphgeeks.intellij.plugin.cypher.psi.impl"
+
+  elementTypeHolderClass="io.graphgeeks.intellij.plugin.cypher.psi.CypherTypes"
+  elementTypeClass="io.graphgeeks.intellij.plugin.cypher.psi.CypherElementType"
+  tokenTypeClass="io.graphgeeks.intellij.plugin.cypher.psi.CypherTokenType"
+}
+
+simpleFile ::= item_*
+
+private item_ ::= (property|COMMENT|CRLF)
+
+property ::= (KEY? SEPARATOR VALUE?) | KEY

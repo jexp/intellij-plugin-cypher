@@ -3,7 +3,7 @@ plugins {
 }
 
 apply plugin: 'org.jetbrains.intellij'
-apply plugin: 'scala'
+apply plugin: 'java'
 apply plugin: 'idea'
 
 repositories {
@@ -28,7 +28,4 @@ intellij {
 }
 
 dependencies {
-    compile "org.scala-lang:scala-library:2.11.7"
-    compile "org.scala-lang:scala-compiler:2.11.7"
-    compile 'org.neo4j:neo4j-cypher-compiler-2.3:2.3.0'
 }
