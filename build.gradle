@@ -27,5 +27,13 @@ intellij {
     }
 }
 
+sourceSets {
+    main {
+        java {
+            srcDirs 'src/main/java', 'gen'
+        }
+    }
+}
+
 dependencies {
 }

@@ -11,10 +11,123 @@
   elementTypeHolderClass="io.graphgeeks.intellij.plugin.cypher.psi.CypherTypes"
   elementTypeClass="io.graphgeeks.intellij.plugin.cypher.psi.CypherElementType"
   tokenTypeClass="io.graphgeeks.intellij.plugin.cypher.psi.CypherTokenType"
+
+  tokens=[
+    // keywords
+    MATCH="regexp:(M|m)(A|a)(T|t)(C|c)(H|h)"
+    RETURN="regexp:(R|r)(E|e)(T|t)(U|u)(R|r)(N|n)"
+    UNION="regexp:(U|u)(N|n)(I|i)(O|o)(N|n)"
+    UNION_ALL="regexp:(U|u)(N|n)(I|i)(O|o)(N|n) (A|a)(L|l)(L|l)"
+    LOAD_CSV="regexp:((L|l)(O|o)(A|a)(D|d) (C|c)(S|s)(V|v))"
+    WITH_HEADERS="regexp:(W|w)(I|i)(T|t)(H|h) (H|h)(E|e)(A|a)(D|d)(E|e)(R|r)(S|s)"
+    FROM="regexp:(F|f)(R|r)(O|o)(M|m)"
+    AS="regexp:(A|a)(S|s)"
+    FIELDTERMINATOR="regexp:(F|f)(I|i)(E|e)(L|l)(D|d)(T|t)(E|e)(R|r)(M|m)(I|i)(N|n)(A|a)(T|t)(O|o)(R|r)"
+    CREATE="regexp:(C|c)(R|r)(E|e)(A|a)(T|t)(E|e)"
+    CONSTRAINT_ON="regexp:(C|c)(O|o)(N|n)(S|s)(T|t)(R|r)(A|a)(I|i)(N|n)(T|t) (O|o)(N|n)"
+    ASSERT="regexp:(A|a)(S|s)(S|s)(E|e)(R|r)(T|t)"
+    IS_UNIQUE="regexp:(I|i)(S|s) (U|u)(N|n)(I|i)(Q|q)(U|u)(E|e)"
+    ASSERT_EXISTS="regexp:(A|a)(S|s)(S|s)(E|e)(R|r)(T|t) (E|e)(X|x)(I|i)(S|s)(T|t)(S|s)"
+    CREATE_INDEX_ON="regexp:(C|c)(R|r)(E|e)(A|a)(T|t)(E|e) (I|i)(N|n)(D|d)(E|e)(X|x) (O|o)(N|n)"
+    DROP="regexp:(D|d)(R|r)(O|o)(P|p)"
+    DROP_INDEX_ON="regexp:(D|d)(R|r)(O|o)(P|p) (I|i)(N|n)(D|d)(E|e)(X|x) (O|o)(N|n)"
+
+    // literals
+    space='regexp:\s+'
+    identifier="regexp:[\w\d\$\_]+"
+    identifier_text="regexp:\`[^`]+\`"
+    decimal="regexp:[+-]?(([1-9]\d+)|([0-9]))\.\d+"
+    integer="regexp:[+-]?(([1-9]\d+)|([0-9]))"
+    string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+
+    leftParent="("
+    rightParent=")"
+    semicolon=";"
+    colon=":"
+    dot="."
+    equal="="
+    lessThen="<"
+    greatherThen=">"
+    plus="+"
+    minus="-"
+    mul="*"
+    bactick="`"
+
+    // comments
+    line_comment="regexp://.*"
+    block_comment="regexp:/\*(.|\n)*\*/"
+  ]
 }
 
-cypherFile ::= item_*
+cypher ::= Statements *
 
-private item_ ::= (property|COMMENT|CRLF)
+private Statements ::= !<<eof>> Statement ';' {pin=1 recoverWhile=statement_recover}
+private statement_recover ::= !(';')
 
-property ::= (KEY? SEPARATOR VALUE?) | KEY
+//---- Statement
+Statement ::= Command | Query
+
+//---- Command
+Command ::= CreateUniqueConstraint
+          | CreateNodePropertyExistenceConstraint
+          | CreateRelationshipPropertyExistenceConstraint
+          | CreateIndex
+          | DropUniqueConstraint
+          | DropNodePropertyExistenceConstraint
+          | DropRelationshipPropertyExistenceConstraint
+          | DropIndex
+
+CreateUniqueConstraint ::= CREATE UniqueConstraintSyntax
+CreateNodePropertyExistenceConstraint ::= CREATE NodePropertyExistenceConstraintSyntax
+CreateRelationshipPropertyExistenceConstraint ::= CREATE RelationshipPropertyExistenceConstraintSyntax
+CreateIndex ::= CREATE_INDEX_ON NodeLabel "(" PropertyKeyName ")"
+DropUniqueConstraint ::= DROP UniqueConstraintSyntax
+DropNodePropertyExistenceConstraint ::= DROP NodePropertyExistenceConstraintSyntax
+DropRelationshipPropertyExistenceConstraint ::= DROP RelationshipPropertyExistenceConstraintSyntax
+DropIndex ::= DROP_INDEX_ON NodeLabel "(" PropertyKeyName ")"
+
+UniqueConstraintSyntax ::= CONSTRAINT_ON "(" Identifier NodeLabel  ")" ASSERT PropertyExpression IS_UNIQUE
+NodePropertyExistenceConstraintSyntax ::= CONSTRAINT_ON "(" Identifier NodeLabel  ")" ASSERT_EXISTS "(" PropertyExpression ")"
+RelationshipPropertyExistenceConstraintSyntax ::= CONSTRAINT_ON RelationshipPatternSyntax ASSERT_EXISTS "(" PropertyExpression ")"
+RelationshipPatternSyntax ::= ("()-[" Identifier RelType "]-()")
+      | ("()-[" Identifier RelType "]->()")
+      | ("()<-[" Identifier RelType "]-()")
+
+//---- Query
+
+Query ::= RegularQuery
+      //| BulkImportQuery
+RegularQuery ::= SingleQuery Union *
+Union ::= (UNION_ALL | UNION) SingleQuery
+SingleQuery ::= Clause *
+Clause ::= LoadCSV
+//    | Start
+//    | Match
+//    | Unwind
+//    | Merge
+//    | Create
+//    | SetClause
+//    | Delete
+//    | Remove
+//    | Foreach
+//    | With
+//    | Return
+//    | Pragma
+LoadCSV ::= LOAD_CSV WITH_HEADERS? FROM Expression AS Identifier (FIELDTERMINATOR string)?
+
+//---- Expression
+Expression ::= "expstub"
+PropertyExpression ::= "propexpstub"
+
+//---- Literals
+Identifier ::= SymbolicNameString
+NodeLabel ::= ":" LabelName
+LabelName ::= SymbolicNameString
+RelType ::= ":" RelTypeName
+RelTypeName ::= SymbolicNameString
+PropertyKeyName ::= SymbolicNameString
+
+//---- Base
+private SymbolicNameString ::=  UnescapedSymbolicNameString | EscapedSymbolicNameString
+private EscapedSymbolicNameString ::= identifier_text
+private UnescapedSymbolicNameString ::= identifier
