@@ -33,7 +33,20 @@ public class CypherParser implements PsiParser, LightPsiParser {
   }
 
   protected boolean parse_root_(IElementType t, PsiBuilder b, int l) {
-    return simpleFile(b, l + 1);
+    return cypherFile(b, l + 1);
+  }
+
+  /* ********************************************************** */
+  // item_*
+  static boolean cypherFile(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cypherFile")) return false;
+    int c = current_position_(b);
+    while (true) {
+      if (!item_(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "cypherFile", c)) break;
+      c = current_position_(b);
+    }
+    return true;
   }
 
   /* ********************************************************** */
@@ -85,19 +98,6 @@ public class CypherParser implements PsiParser, LightPsiParser {
   private static boolean property_0_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "property_0_2")) return false;
     consumeToken(b, VALUE);
-    return true;
-  }
-
-  /* ********************************************************** */
-  // item_*
-  static boolean simpleFile(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "simpleFile")) return false;
-    int c = current_position_(b);
-    while (true) {
-      if (!item_(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "simpleFile", c)) break;
-      c = current_position_(b);
-    }
     return true;
   }
 

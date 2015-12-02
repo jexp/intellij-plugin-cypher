@@ -13,7 +13,7 @@
   tokenTypeClass="io.graphgeeks.intellij.plugin.cypher.psi.CypherTokenType"
 }
 
-simpleFile ::= item_*
+cypherFile ::= item_*
 
 private item_ ::= (property|COMMENT|CRLF)
 

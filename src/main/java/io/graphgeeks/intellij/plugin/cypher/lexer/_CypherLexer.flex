@@ -1,4 +1,4 @@
-package io.graphgeeks.intellij.plugin.cypher;
+package io.graphgeeks.intellij.plugin.cypher.lexer;
 import com.intellij.lexer.*;
 import com.intellij.psi.tree.IElementType;
 import static io.graphgeeks.intellij.plugin.cypher.psi.CypherTypes.*;
