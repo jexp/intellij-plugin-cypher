@@ -13,7 +13,4 @@ public interface CypherRelTypeName extends PsiElement {
   @Nullable
   PsiElement getLIdentifierText();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

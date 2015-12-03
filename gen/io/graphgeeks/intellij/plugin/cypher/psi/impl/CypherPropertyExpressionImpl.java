@@ -178,10 +178,4 @@ public class CypherPropertyExpressionImpl extends ASTWrapperPsiElement implement
     return findChildByType(K_TRUE);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getLSpace() {
-    return findChildByType(L_SPACE);
-  }
-
 }

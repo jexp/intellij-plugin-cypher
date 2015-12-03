@@ -16,7 +16,4 @@ public interface CypherUnion extends PsiElement {
   @Nullable
   PsiElement getKUnionAll();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

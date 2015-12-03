@@ -34,10 +34,4 @@ public class CypherLimitImpl extends ASTWrapperPsiElement implements CypherLimit
     return findNotNullChildByType(K_LIMIT);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getLSpace() {
-    return findChildByType(L_SPACE);
-  }
-
 }

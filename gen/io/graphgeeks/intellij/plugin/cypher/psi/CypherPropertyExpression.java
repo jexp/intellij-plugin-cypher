@@ -85,7 +85,4 @@ public interface CypherPropertyExpression extends PsiElement {
   @Nullable
   PsiElement getKTrue();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

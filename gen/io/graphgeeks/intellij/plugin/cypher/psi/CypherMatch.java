@@ -22,7 +22,4 @@ public interface CypherMatch extends PsiElement {
   @Nullable
   PsiElement getKOptionalMatch();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

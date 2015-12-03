@@ -34,10 +34,4 @@ public class CypherWhereImpl extends ASTWrapperPsiElement implements CypherWhere
     return findNotNullChildByType(K_WHERE);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getLSpace() {
-    return findChildByType(L_SPACE);
-  }
-
 }

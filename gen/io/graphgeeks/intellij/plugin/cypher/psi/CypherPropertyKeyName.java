@@ -13,7 +13,4 @@ public interface CypherPropertyKeyName extends PsiElement {
   @Nullable
   PsiElement getLIdentifierText();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

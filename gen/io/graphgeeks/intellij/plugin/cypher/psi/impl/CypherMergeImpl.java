@@ -40,10 +40,4 @@ public class CypherMergeImpl extends ASTWrapperPsiElement implements CypherMerge
     return findNotNullChildByType(K_MERGE);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getLSpace() {
-    return findChildByType(L_SPACE);
-  }
-
 }

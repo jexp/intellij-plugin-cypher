@@ -13,7 +13,4 @@ public interface CypherIdentifier extends PsiElement {
   @Nullable
   PsiElement getLIdentifierText();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

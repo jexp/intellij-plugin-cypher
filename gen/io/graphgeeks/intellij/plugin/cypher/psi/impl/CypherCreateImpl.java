@@ -40,10 +40,4 @@ public class CypherCreateImpl extends ASTWrapperPsiElement implements CypherCrea
     return findChildByType(K_CREATE_UNIQUE);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getLSpace() {
-    return findChildByType(L_SPACE);
-  }
-
 }

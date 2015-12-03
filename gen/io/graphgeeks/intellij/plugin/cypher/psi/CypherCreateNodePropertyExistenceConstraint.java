@@ -13,7 +13,4 @@ public interface CypherCreateNodePropertyExistenceConstraint extends PsiElement 
   @NotNull
   PsiElement getKCreate();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

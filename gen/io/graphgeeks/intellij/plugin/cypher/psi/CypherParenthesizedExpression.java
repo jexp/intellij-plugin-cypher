@@ -10,7 +10,4 @@ public interface CypherParenthesizedExpression extends PsiElement {
   @NotNull
   CypherExpression getExpression();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

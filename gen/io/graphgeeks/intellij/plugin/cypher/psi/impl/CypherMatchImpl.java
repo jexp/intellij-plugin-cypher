@@ -52,10 +52,4 @@ public class CypherMatchImpl extends ASTWrapperPsiElement implements CypherMatch
     return findChildByType(K_OPTIONAL_MATCH);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getLSpace() {
-    return findChildByType(L_SPACE);
-  }
-
 }

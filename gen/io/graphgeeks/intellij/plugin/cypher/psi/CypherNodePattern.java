@@ -16,7 +16,4 @@ public interface CypherNodePattern extends PsiElement {
   @NotNull
   CypherMaybeProperties getMaybeProperties();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

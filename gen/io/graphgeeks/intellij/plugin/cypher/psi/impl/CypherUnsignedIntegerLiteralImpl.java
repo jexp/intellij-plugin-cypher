@@ -28,10 +28,4 @@ public class CypherUnsignedIntegerLiteralImpl extends ASTWrapperPsiElement imple
     return findNotNullChildByType(L_INTEGER);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getLSpace() {
-    return findChildByType(L_SPACE);
-  }
-
 }

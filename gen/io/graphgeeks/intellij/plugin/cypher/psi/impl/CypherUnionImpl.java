@@ -40,10 +40,4 @@ public class CypherUnionImpl extends ASTWrapperPsiElement implements CypherUnion
     return findChildByType(K_UNION_ALL);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getLSpace() {
-    return findChildByType(L_SPACE);
-  }
-
 }

@@ -40,10 +40,4 @@ public class CypherMergeActionImpl extends ASTWrapperPsiElement implements Cyphe
     return findChildByType(K_ON_MATCH);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getLSpace() {
-    return findChildByType(L_SPACE);
-  }
-
 }

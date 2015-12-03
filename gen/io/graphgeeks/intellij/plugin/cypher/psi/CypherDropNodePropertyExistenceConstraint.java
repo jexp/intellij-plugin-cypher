@@ -13,7 +13,4 @@ public interface CypherDropNodePropertyExistenceConstraint extends PsiElement {
   @NotNull
   PsiElement getKDrop();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

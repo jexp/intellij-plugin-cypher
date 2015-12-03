@@ -13,7 +13,4 @@ public interface CypherDropUniqueConstraint extends PsiElement {
   @NotNull
   PsiElement getKDrop();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

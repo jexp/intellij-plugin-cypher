@@ -22,7 +22,4 @@ public interface CypherRelationshipLookup extends PsiElement {
   @Nullable
   PsiElement getKRelationship();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

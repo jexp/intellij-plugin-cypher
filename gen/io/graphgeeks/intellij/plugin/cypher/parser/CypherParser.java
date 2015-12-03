@@ -4508,10 +4508,15 @@ public class CypherParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // l_space?
+  // l_space*
   static boolean ws(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ws")) return false;
-    consumeToken(b, L_SPACE);
+    int c = current_position_(b);
+    while (true) {
+      if (!consumeToken(b, L_SPACE)) break;
+      if (!empty_element_parsed_guard_(b, "ws", c)) break;
+      c = current_position_(b);
+    }
     return true;
   }
 

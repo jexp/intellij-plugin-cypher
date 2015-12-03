@@ -16,7 +16,4 @@ public interface CypherMergeAction extends PsiElement {
   @Nullable
   PsiElement getKOnMatch();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

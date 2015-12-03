@@ -28,10 +28,4 @@ public class CypherParenthesizedExpressionImpl extends ASTWrapperPsiElement impl
     return findNotNullChildByClass(CypherExpression.class);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getLSpace() {
-    return findChildByType(L_SPACE);
-  }
-
 }

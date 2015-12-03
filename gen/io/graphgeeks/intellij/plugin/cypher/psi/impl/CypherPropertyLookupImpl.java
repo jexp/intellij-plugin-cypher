@@ -28,10 +28,4 @@ public class CypherPropertyLookupImpl extends ASTWrapperPsiElement implements Cy
     return findNotNullChildByClass(CypherPropertyKeyName.class);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getLSpace() {
-    return findChildByType(L_SPACE);
-  }
-
 }

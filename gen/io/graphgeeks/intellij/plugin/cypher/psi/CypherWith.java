@@ -19,7 +19,4 @@ public interface CypherWith extends PsiElement {
   @Nullable
   PsiElement getKWithDistinct();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

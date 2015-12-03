@@ -70,10 +70,4 @@ public class CypherLoadCSVImpl extends ASTWrapperPsiElement implements CypherLoa
     return findChildByType(K_WITH_HEADERS);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getLSpace() {
-    return findChildByType(L_SPACE);
-  }
-
 }

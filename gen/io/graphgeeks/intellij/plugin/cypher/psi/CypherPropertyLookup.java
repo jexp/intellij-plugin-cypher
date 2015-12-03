@@ -10,7 +10,4 @@ public interface CypherPropertyLookup extends PsiElement {
   @NotNull
   CypherPropertyKeyName getPropertyKeyName();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

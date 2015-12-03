@@ -34,10 +34,4 @@ public class CypherSkipImpl extends ASTWrapperPsiElement implements CypherSkip {
     return findNotNullChildByType(K_SKIP);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getLSpace() {
-    return findChildByType(L_SPACE);
-  }
-
 }

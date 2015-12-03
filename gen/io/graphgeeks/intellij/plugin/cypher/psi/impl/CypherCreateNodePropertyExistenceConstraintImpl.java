@@ -34,10 +34,4 @@ public class CypherCreateNodePropertyExistenceConstraintImpl extends ASTWrapperP
     return findNotNullChildByType(K_CREATE);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getLSpace() {
-    return findChildByType(L_SPACE);
-  }
-
 }

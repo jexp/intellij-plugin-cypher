@@ -40,10 +40,4 @@ public class CypherNodePatternImpl extends ASTWrapperPsiElement implements Cyphe
     return findNotNullChildByClass(CypherMaybeProperties.class);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getLSpace() {
-    return findChildByType(L_SPACE);
-  }
-
 }

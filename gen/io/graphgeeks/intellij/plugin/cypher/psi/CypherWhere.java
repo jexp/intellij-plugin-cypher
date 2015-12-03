@@ -13,7 +13,4 @@ public interface CypherWhere extends PsiElement {
   @NotNull
   PsiElement getKWhere();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

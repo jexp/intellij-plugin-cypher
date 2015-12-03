@@ -16,7 +16,4 @@ public interface CypherCreate extends PsiElement {
   @Nullable
   PsiElement getKCreateUnique();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

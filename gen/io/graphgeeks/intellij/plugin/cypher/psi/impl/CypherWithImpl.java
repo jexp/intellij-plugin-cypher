@@ -46,10 +46,4 @@ public class CypherWithImpl extends ASTWrapperPsiElement implements CypherWith {
     return findChildByType(K_WITH_DISTINCT);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getLSpace() {
-    return findChildByType(L_SPACE);
-  }
-
 }

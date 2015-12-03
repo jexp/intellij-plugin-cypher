@@ -13,7 +13,4 @@ public interface CypherCreateUniqueConstraint extends PsiElement {
   @NotNull
   PsiElement getKCreate();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }

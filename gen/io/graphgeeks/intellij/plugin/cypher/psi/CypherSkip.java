@@ -13,7 +13,4 @@ public interface CypherSkip extends PsiElement {
   @NotNull
   PsiElement getKSkip();
 
-  @Nullable
-  PsiElement getLSpace();
-
 }
