@@ -34,4 +34,10 @@ public class CypherCreateRelationshipPropertyExistenceConstraintImpl extends AST
     return findNotNullChildByType(K_CREATE);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getLSpace() {
+    return findChildByType(L_SPACE);
+  }
+
 }

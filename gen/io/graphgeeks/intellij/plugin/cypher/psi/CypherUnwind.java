@@ -19,4 +19,7 @@ public interface CypherUnwind extends PsiElement {
   @NotNull
   PsiElement getKUnwind();
 
+  @Nullable
+  PsiElement getLSpace();
+
 }

@@ -7,6 +7,9 @@ import com.intellij.psi.PsiElement;
 
 public interface CypherStringLiteral extends PsiElement {
 
+  @Nullable
+  PsiElement getLSpace();
+
   @NotNull
   PsiElement getLString();
 

@@ -10,4 +10,7 @@ public interface CypherSignedIntegerLiteral extends PsiElement {
   @NotNull
   PsiElement getLInteger();
 
+  @Nullable
+  PsiElement getLSpace();
+
 }

@@ -72,8 +72,34 @@ K_ASC=(A|a)(S|s)(C|c)
 K_SKIP=(S|s)(K|k)(I|i)(P|p)
 K_LIMIT=(L|l)(I|i)(M|m)(I|i)(T|t)
 K_USING_PERIODIC_COMMIT=(U|u)(S|s)(I|i)(N|n)(G|g) (P|p)(E|e)(R|r)(I|i)(O|o)(D|d)(I|i)(C|c) (C|c)(O|o)(M|m)(M|m)(I|i)(T|t)
+K_XOR=(X|x)(O|o)(R|r)
+K_OR=(O|o)(R|r)
+K_AND=(A|a)(N|n)(D|d)
+K_NOT=(N|n)(O|o)(T|t)
+K_STARTS_WITH=(S|s)(T|t)(A|a)(R|r)(T|t)(S|s) (W|w)(I|i)(T|t)(H|h)
+K_ENDS_WITH=(E|e)(N|n)(D|d)(S|s) (W|w)(I|i)(T|t)(H|h)
+K_CONTAINS=(C|c)(O|o)(N|n)(T|t)(A|a)(I|i)(N|n)(S|s)
+K_IS_NULL=(I|i)(S|s) (N|n)(U|u)(L|l)(L|l)
+K_IS_NOT_NULL=(I|i)(S|s) (N|n)(O|o)(T|t) (N|n)(U|u)(L|l)(L|l)
+K_TRUE=(T|t)(R|r)(U|u)(E|e)
+K_FALSE=(F|f)(A|a)(L|l)(S|s)(E|e)
+K_NULL=(N|n)(U|u)(L|l)(L|l)
+K_COUNT=(C|c)(O|o)(U|u)(N|n)(T|t)
+K_FILTER=(F|f)(I|i)(L|l)(T|t)(E|e)(R|r)
+K_EXTRACT=(E|e)(X|x)(T|t)(R|r)(A|a)(C|c)(T|t)
+K_REDUCE=(R|r)(E|e)(D|d)(U|u)(C|c)(E|e)
+K_ALL=(A|a)(L|l)(L|l)
+K_ANY=(A|a)(N|n)(Y|y)
+K_NONE=(N|n)(O|o)(N|n)(E|e)
+K_SINGLE=(S|s)(I|i)(N|n)(G|g)(L|l)(E|e)
+K_CASE=(C|c)(A|a)(S|s)(E|e)
+K_DISTINCT=(D|d)(I|i)(S|s)(T|t)(I|i)(N|n)(C|c)(T|t)
+K_ELSE=(E|e)(L|l)(S|s)(E|e)
+K_END=(E|e)(N|n)(D|d)
+K_WHEN=(W|w)(H|h)(E|e)(N|n)
+K_THEN=(T|t)(H|h)(E|e)(N|n)
 L_SPACE=[ \t\n\x0B\f\r]+
-L_IDENTIFIER=[a-zA-Z_$][a-zA-Z_$\d]+
+L_IDENTIFIER=[a-zA-Z_$][a-zA-Z_$\d]*
 L_IDENTIFIER_TEXT=\`[^`]+\`
 L_DECIMAL=[+-]?(([1-9][0-9]+)|([0-9]))\.[0-9]+
 L_INTEGER=[+-]?(([1-9][0-9]+)|([0-9]))
@@ -106,6 +132,14 @@ BLOCKCOMMENT="/"\*(.|\n)*\*"/"
   "|"                            { return PIPE; }
   ".."                           { return RANGE; }
   "+="                           { return PLUSEQUALS; }
+  "<>"                           { return INVALIDNOTEQUALS; }
+  "!="                           { return NOTEQUALS; }
+  "<="                           { return LESSTHANEQUALS; }
+  ">="                           { return GREATERTHANEQUALS; }
+  "/"                            { return DIVIDE; }
+  "%"                            { return MODULO; }
+  "^"                            { return POW; }
+  "=~"                           { return REGEXMATCH; }
   "()-["                         { return STARTRELPATTERN; }
   "()<-["                        { return STARTRELPATTERNDIRECTED; }
   "]-()"                         { return ENDRELPATTERN; }
@@ -161,6 +195,32 @@ BLOCKCOMMENT="/"\*(.|\n)*\*"/"
   {K_SKIP}                       { return K_SKIP; }
   {K_LIMIT}                      { return K_LIMIT; }
   {K_USING_PERIODIC_COMMIT}      { return K_USING_PERIODIC_COMMIT; }
+  {K_XOR}                        { return K_XOR; }
+  {K_OR}                         { return K_OR; }
+  {K_AND}                        { return K_AND; }
+  {K_NOT}                        { return K_NOT; }
+  {K_STARTS_WITH}                { return K_STARTS_WITH; }
+  {K_ENDS_WITH}                  { return K_ENDS_WITH; }
+  {K_CONTAINS}                   { return K_CONTAINS; }
+  {K_IS_NULL}                    { return K_IS_NULL; }
+  {K_IS_NOT_NULL}                { return K_IS_NOT_NULL; }
+  {K_TRUE}                       { return K_TRUE; }
+  {K_FALSE}                      { return K_FALSE; }
+  {K_NULL}                       { return K_NULL; }
+  {K_COUNT}                      { return K_COUNT; }
+  {K_FILTER}                     { return K_FILTER; }
+  {K_EXTRACT}                    { return K_EXTRACT; }
+  {K_REDUCE}                     { return K_REDUCE; }
+  {K_ALL}                        { return K_ALL; }
+  {K_ANY}                        { return K_ANY; }
+  {K_NONE}                       { return K_NONE; }
+  {K_SINGLE}                     { return K_SINGLE; }
+  {K_CASE}                       { return K_CASE; }
+  {K_DISTINCT}                   { return K_DISTINCT; }
+  {K_ELSE}                       { return K_ELSE; }
+  {K_END}                        { return K_END; }
+  {K_WHEN}                       { return K_WHEN; }
+  {K_THEN}                       { return K_THEN; }
   {L_SPACE}                      { return L_SPACE; }
   {L_IDENTIFIER}                 { return L_IDENTIFIER; }
   {L_IDENTIFIER_TEXT}            { return L_IDENTIFIER_TEXT; }

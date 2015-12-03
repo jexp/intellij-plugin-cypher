@@ -13,4 +13,7 @@ public interface CypherLimit extends PsiElement {
   @NotNull
   PsiElement getKLimit();
 
+  @Nullable
+  PsiElement getLSpace();
+
 }

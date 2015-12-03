@@ -22,4 +22,166 @@ public class CypherPropertyExpressionImpl extends ASTWrapperPsiElement implement
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public CypherCaseExpression getCaseExpression() {
+    return findChildByClass(CypherCaseExpression.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherExpression.class);
+  }
+
+  @Override
+  @Nullable
+  public CypherFilterExpression getFilterExpression() {
+    return findChildByClass(CypherFilterExpression.class);
+  }
+
+  @Override
+  @Nullable
+  public CypherFunctionInvocation getFunctionInvocation() {
+    return findChildByClass(CypherFunctionInvocation.class);
+  }
+
+  @Override
+  @Nullable
+  public CypherIdInColl getIdInColl() {
+    return findChildByClass(CypherIdInColl.class);
+  }
+
+  @Override
+  @Nullable
+  public CypherIdentifier getIdentifier() {
+    return findChildByClass(CypherIdentifier.class);
+  }
+
+  @Override
+  @Nullable
+  public CypherListComprehension getListComprehension() {
+    return findChildByClass(CypherListComprehension.class);
+  }
+
+  @Override
+  @Nullable
+  public CypherMapLiteral getMapLiteral() {
+    return findChildByClass(CypherMapLiteral.class);
+  }
+
+  @Override
+  @Nullable
+  public CypherNumberLiteral getNumberLiteral() {
+    return findChildByClass(CypherNumberLiteral.class);
+  }
+
+  @Override
+  @Nullable
+  public CypherParameter getParameter() {
+    return findChildByClass(CypherParameter.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherPropertyLookup> getPropertyLookupList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherPropertyLookup.class);
+  }
+
+  @Override
+  @Nullable
+  public CypherRelationshipsPattern getRelationshipsPattern() {
+    return findChildByClass(CypherRelationshipsPattern.class);
+  }
+
+  @Override
+  @Nullable
+  public CypherShortestPathPattern getShortestPathPattern() {
+    return findChildByClass(CypherShortestPathPattern.class);
+  }
+
+  @Override
+  @Nullable
+  public CypherStringLiteral getStringLiteral() {
+    return findChildByClass(CypherStringLiteral.class);
+  }
+
+  @Override
+  @Nullable
+  public CypherParenthesizedExpression getParenthesizedExpression() {
+    return findChildByClass(CypherParenthesizedExpression.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getKAll() {
+    return findChildByType(K_ALL);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getKAny() {
+    return findChildByType(K_ANY);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getKCount() {
+    return findChildByType(K_COUNT);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getKExtract() {
+    return findChildByType(K_EXTRACT);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getKFalse() {
+    return findChildByType(K_FALSE);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getKFilter() {
+    return findChildByType(K_FILTER);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getKNone() {
+    return findChildByType(K_NONE);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getKNull() {
+    return findChildByType(K_NULL);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getKReduce() {
+    return findChildByType(K_REDUCE);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getKSingle() {
+    return findChildByType(K_SINGLE);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getKTrue() {
+    return findChildByType(K_TRUE);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getLSpace() {
+    return findChildByType(L_SPACE);
+  }
+
 }

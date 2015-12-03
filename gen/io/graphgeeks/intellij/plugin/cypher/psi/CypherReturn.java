@@ -16,4 +16,7 @@ public interface CypherReturn extends PsiElement {
   @Nullable
   PsiElement getKReturnDistinct();
 
+  @Nullable
+  PsiElement getLSpace();
+
 }

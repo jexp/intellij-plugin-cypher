@@ -34,4 +34,10 @@ public class CypherPeriodicCommitHintImpl extends ASTWrapperPsiElement implement
     return findNotNullChildByType(K_USING_PERIODIC_COMMIT);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getLSpace() {
+    return findChildByType(L_SPACE);
+  }
+
 }

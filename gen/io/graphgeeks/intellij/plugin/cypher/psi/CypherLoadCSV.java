@@ -31,4 +31,7 @@ public interface CypherLoadCSV extends PsiElement {
   @Nullable
   PsiElement getKWithHeaders();
 
+  @Nullable
+  PsiElement getLSpace();
+
 }

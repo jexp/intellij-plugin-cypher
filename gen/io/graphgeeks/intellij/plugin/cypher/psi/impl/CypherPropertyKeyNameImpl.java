@@ -34,4 +34,10 @@ public class CypherPropertyKeyNameImpl extends ASTWrapperPsiElement implements C
     return findChildByType(L_IDENTIFIER_TEXT);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getLSpace() {
+    return findChildByType(L_SPACE);
+  }
+
 }

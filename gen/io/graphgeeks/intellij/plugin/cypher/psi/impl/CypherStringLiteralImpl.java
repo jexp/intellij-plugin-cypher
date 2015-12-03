@@ -23,6 +23,12 @@ public class CypherStringLiteralImpl extends ASTWrapperPsiElement implements Cyp
   }
 
   @Override
+  @Nullable
+  public PsiElement getLSpace() {
+    return findChildByType(L_SPACE);
+  }
+
+  @Override
   @NotNull
   public PsiElement getLString() {
     return findNotNullChildByType(L_STRING);

@@ -19,4 +19,7 @@ public interface CypherNodeLookup extends PsiElement {
   @NotNull
   PsiElement getKNode();
 
+  @Nullable
+  PsiElement getLSpace();
+
 }

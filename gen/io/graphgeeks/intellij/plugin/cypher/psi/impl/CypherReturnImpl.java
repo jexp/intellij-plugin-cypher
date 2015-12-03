@@ -40,4 +40,10 @@ public class CypherReturnImpl extends ASTWrapperPsiElement implements CypherRetu
     return findChildByType(K_RETURN_DISTINCT);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getLSpace() {
+    return findChildByType(L_SPACE);
+  }
+
 }

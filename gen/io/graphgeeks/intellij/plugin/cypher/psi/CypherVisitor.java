@@ -15,6 +15,14 @@ public class CypherVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCaseAlternatives(@NotNull CypherCaseAlternatives o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCaseExpression(@NotNull CypherCaseExpression o) {
+    visitPsiElement(o);
+  }
+
   public void visitClause(@NotNull CypherClause o) {
     visitPsiElement(o);
   }
@@ -47,6 +55,10 @@ public class CypherVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDoubleLiteral(@NotNull CypherDoubleLiteral o) {
+    visitPsiElement(o);
+  }
+
   public void visitDropIndex(@NotNull CypherDropIndex o) {
     visitPsiElement(o);
   }
@@ -67,11 +79,27 @@ public class CypherVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFilterExpression(@NotNull CypherFilterExpression o) {
+    visitPsiElement(o);
+  }
+
   public void visitForeach(@NotNull CypherForeach o) {
     visitPsiElement(o);
   }
 
+  public void visitFunctionInvocation(@NotNull CypherFunctionInvocation o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFunctionName(@NotNull CypherFunctionName o) {
+    visitPsiElement(o);
+  }
+
   public void visitHint(@NotNull CypherHint o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIdInColl(@NotNull CypherIdInColl o) {
     visitPsiElement(o);
   }
 
@@ -92,6 +120,10 @@ public class CypherVisitor extends PsiElementVisitor {
   }
 
   public void visitLimit(@NotNull CypherLimit o) {
+    visitPsiElement(o);
+  }
+
+  public void visitListComprehension(@NotNull CypherListComprehension o) {
     visitPsiElement(o);
   }
 
@@ -175,6 +207,10 @@ public class CypherVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitNumberLiteral(@NotNull CypherNumberLiteral o) {
+    visitPsiElement(o);
+  }
+
   public void visitOrder(@NotNull CypherOrder o) {
     visitPsiElement(o);
   }
@@ -208,6 +244,10 @@ public class CypherVisitor extends PsiElementVisitor {
   }
 
   public void visitPropertyKeyName(@NotNull CypherPropertyKeyName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPropertyLookup(@NotNull CypherPropertyLookup o) {
     visitPsiElement(o);
   }
 
@@ -264,6 +304,10 @@ public class CypherVisitor extends PsiElementVisitor {
   }
 
   public void visitRelationshipTypes(@NotNull CypherRelationshipTypes o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRelationshipsPattern(@NotNull CypherRelationshipsPattern o) {
     visitPsiElement(o);
   }
 
@@ -356,6 +400,10 @@ public class CypherVisitor extends PsiElementVisitor {
   }
 
   public void visitWith(@NotNull CypherWith o) {
+    visitPsiElement(o);
+  }
+
+  public void visitParenthesizedExpression(@NotNull CypherParenthesizedExpression o) {
     visitPsiElement(o);
   }
 

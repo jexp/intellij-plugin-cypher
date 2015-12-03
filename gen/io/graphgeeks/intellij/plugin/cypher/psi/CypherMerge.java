@@ -16,4 +16,7 @@ public interface CypherMerge extends PsiElement {
   @NotNull
   PsiElement getKMerge();
 
+  @Nullable
+  PsiElement getLSpace();
+
 }

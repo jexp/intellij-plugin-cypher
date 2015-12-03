@@ -13,4 +13,7 @@ public interface CypherPeriodicCommitHint extends PsiElement {
   @NotNull
   PsiElement getKUsingPeriodicCommit();
 
+  @Nullable
+  PsiElement getLSpace();
+
 }

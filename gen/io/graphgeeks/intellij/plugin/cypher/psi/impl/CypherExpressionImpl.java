@@ -22,4 +22,100 @@ public class CypherExpressionImpl extends ASTWrapperPsiElement implements Cypher
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public List<CypherCaseExpression> getCaseExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherCaseExpression.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherExpression.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherFilterExpression> getFilterExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherFilterExpression.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherFunctionInvocation> getFunctionInvocationList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherFunctionInvocation.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherIdInColl> getIdInCollList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherIdInColl.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherIdentifier> getIdentifierList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherIdentifier.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherListComprehension> getListComprehensionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherListComprehension.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherMapLiteral> getMapLiteralList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherMapLiteral.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherNodeLabels> getNodeLabelsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherNodeLabels.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherNumberLiteral> getNumberLiteralList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherNumberLiteral.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherParameter> getParameterList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherParameter.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherPropertyLookup> getPropertyLookupList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherPropertyLookup.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherRelationshipsPattern> getRelationshipsPatternList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherRelationshipsPattern.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherShortestPathPattern> getShortestPathPatternList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherShortestPathPattern.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherStringLiteral> getStringLiteralList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherStringLiteral.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CypherParenthesizedExpression> getParenthesizedExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CypherParenthesizedExpression.class);
+  }
+
 }

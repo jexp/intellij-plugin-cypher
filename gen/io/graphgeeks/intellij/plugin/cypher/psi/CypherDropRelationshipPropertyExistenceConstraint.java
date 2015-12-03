@@ -13,4 +13,7 @@ public interface CypherDropRelationshipPropertyExistenceConstraint extends PsiEl
   @NotNull
   PsiElement getKDrop();
 
+  @Nullable
+  PsiElement getLSpace();
+
 }

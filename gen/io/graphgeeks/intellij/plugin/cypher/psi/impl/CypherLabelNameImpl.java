@@ -34,4 +34,10 @@ public class CypherLabelNameImpl extends ASTWrapperPsiElement implements CypherL
     return findChildByType(L_IDENTIFIER_TEXT);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getLSpace() {
+    return findChildByType(L_SPACE);
+  }
+
 }

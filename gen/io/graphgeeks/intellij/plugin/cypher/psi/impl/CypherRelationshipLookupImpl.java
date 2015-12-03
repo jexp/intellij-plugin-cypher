@@ -52,4 +52,10 @@ public class CypherRelationshipLookupImpl extends ASTWrapperPsiElement implement
     return findChildByType(K_RELATIONSHIP);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getLSpace() {
+    return findChildByType(L_SPACE);
+  }
+
 }

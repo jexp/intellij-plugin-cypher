@@ -65,6 +65,32 @@
     K_SKIP="regexp:(S|s)(K|k)(I|i)(P|p)"
     K_LIMIT="regexp:(L|l)(I|i)(M|m)(I|i)(T|t)"
     K_USING_PERIODIC_COMMIT="regexp:(U|u)(S|s)(I|i)(N|n)(G|g) (P|p)(E|e)(R|r)(I|i)(O|o)(D|d)(I|i)(C|c) (C|c)(O|o)(M|m)(M|m)(I|i)(T|t)"
+    K_XOR="regexp:(X|x)(O|o)(R|r)"
+    K_OR="regexp:(O|o)(R|r)"
+    K_AND="regexp:(A|a)(N|n)(D|d)"
+    K_NOT="regexp:(N|n)(O|o)(T|t)"
+    K_STARTS_WITH="regexp:(S|s)(T|t)(A|a)(R|r)(T|t)(S|s) (W|w)(I|i)(T|t)(H|h)"
+    K_ENDS_WITH="regexp:(E|e)(N|n)(D|d)(S|s) (W|w)(I|i)(T|t)(H|h)"
+    K_CONTAINS="regexp:(C|c)(O|o)(N|n)(T|t)(A|a)(I|i)(N|n)(S|s)"
+    K_IS_NULL="regexp:(I|i)(S|s) (N|n)(U|u)(L|l)(L|l)"
+    K_IS_NOT_NULL="regexp:(I|i)(S|s) (N|n)(O|o)(T|t) (N|n)(U|u)(L|l)(L|l)"
+    K_TRUE="regexp:(T|t)(R|r)(U|u)(E|e)"
+    K_FALSE="regexp:(F|f)(A|a)(L|l)(S|s)(E|e)"
+    K_NULL="regexp:(N|n)(U|u)(L|l)(L|l)"
+    K_COUNT="regexp:(C|c)(O|o)(U|u)(N|n)(T|t)"
+    K_FILTER="regexp:(F|f)(I|i)(L|l)(T|t)(E|e)(R|r)"
+    K_EXTRACT="regexp:(E|e)(X|x)(T|t)(R|r)(A|a)(C|c)(T|t)"
+    K_REDUCE="regexp:(R|r)(E|e)(D|d)(U|u)(C|c)(E|e)"
+    K_ALL="regexp:(A|a)(L|l)(L|l)"
+    K_ANY="regexp:(A|a)(N|n)(Y|y)"
+    K_NONE="regexp:(N|n)(O|o)(N|n)(E|e)"
+    K_SINGLE="regexp:(S|s)(I|i)(N|n)(G|g)(L|l)(E|e)"
+    K_CASE="regexp:(C|c)(A|a)(S|s)(E|e)"
+    K_DISTINCT="regexp:(D|d)(I|i)(S|s)(T|t)(I|i)(N|n)(C|c)(T|t)"
+    K_ELSE="regexp:(E|e)(L|l)(S|s)(E|e)"
+    K_END="regexp:(E|e)(N|n)(D|d)"
+    K_WHEN="regexp:(W|w)(H|h)(E|e)(N|n)"
+    K_THEN="regexp:(T|t)(H|h)(E|e)(N|n)"
 
     // literals
     l_space='regexp:\s+'
@@ -96,6 +122,14 @@
     pipe="|"
     range=".."
     plusEquals="+="
+    invalidNotEquals="<>"
+    notEquals="!="
+    lessThanEquals="<="
+    greaterThanEquals=">="
+    divide="/"
+    modulo="%"
+    pow="^"
+    regexMatch="=~"
 
     startRelPattern="()-["
     startRelPatternDirected="()<-["
@@ -133,18 +167,18 @@ Command ::= CreateUniqueConstraint
 CreateUniqueConstraint ::= ws K_CREATE UniqueConstraintSyntax
 CreateNodePropertyExistenceConstraint ::= ws K_CREATE NodePropertyExistenceConstraintSyntax
 CreateRelationshipPropertyExistenceConstraint ::= ws K_CREATE RelationshipPropertyExistenceConstraintSyntax
-CreateIndex ::= ws K_CREATE_INDEX_ON NodeLabel "(" PropertyKeyName ")"
+CreateIndex ::= ws K_CREATE_INDEX_ON NodeLabel ws "(" ws PropertyKeyName ws ")"
 DropUniqueConstraint ::= ws K_DROP UniqueConstraintSyntax
 DropNodePropertyExistenceConstraint ::= ws K_DROP NodePropertyExistenceConstraintSyntax
 DropRelationshipPropertyExistenceConstraint ::= ws K_DROP RelationshipPropertyExistenceConstraintSyntax
-DropIndex ::= ws K_DROP_INDEX_ON NodeLabel "(" PropertyKeyName ")"
+DropIndex ::= ws K_DROP_INDEX_ON NodeLabel ws "(" ws PropertyKeyName ws ")"
 
-UniqueConstraintSyntax ::= ws K_CONSTRAINT_ON "(" Identifier NodeLabel  ")" K_ASSERT PropertyExpression K_IS_UNIQUE
-NodePropertyExistenceConstraintSyntax ::= ws K_CONSTRAINT_ON "(" Identifier NodeLabel  ")" K_ASSERT_EXISTS "(" PropertyExpression ")"
-RelationshipPropertyExistenceConstraintSyntax ::= ws K_CONSTRAINT_ON RelationshipPatternSyntax K_ASSERT_EXISTS "(" PropertyExpression ")"
-RelationshipPatternSyntax ::= (ws "()-[" Identifier RelType "]-()") // todo: move this to literals
-      | (ws "()-[" Identifier RelType "]->()")
-      | (ws "()<-[" Identifier RelType "]-()")
+UniqueConstraintSyntax ::= ws K_CONSTRAINT_ON ws "(" ws Identifier NodeLabel ws ")" ws K_ASSERT PropertyExpression K_IS_UNIQUE
+NodePropertyExistenceConstraintSyntax ::= ws K_CONSTRAINT_ON ws "(" ws Identifier NodeLabel ws ")" ws K_ASSERT_EXISTS ws "(" ws PropertyExpression ws ")"
+RelationshipPropertyExistenceConstraintSyntax ::= ws K_CONSTRAINT_ON RelationshipPatternSyntax K_ASSERT_EXISTS ws "(" ws PropertyExpression ws ")"
+RelationshipPatternSyntax ::= (ws "()-[" ws Identifier RelType ws "]-()") // todo: move this to literals
+      | (ws "()-[" ws Identifier RelType ws "]->()")
+      | (ws "()<-[" ws Identifier RelType ws "]-()")
 
 /*************************
  * Query
@@ -181,28 +215,28 @@ LoadCSVQuery ::= LoadCSV Clause*
 LoadCSV ::= ws K_LOAD_CSV K_WITH_HEADERS? K_FROM Expression K_AS Identifier (K_FIELDTERMINATOR StringLiteral)?
 
 //-- Start
-Start ::= ws K_START (StartPoint ("," StartPoint)*)? Where?
-StartPoint ::= Identifier "=" Lookup
+Start ::= ws K_START (StartPoint (ws "," ws StartPoint)*)? Where?
+StartPoint ::= Identifier ws "=" ws Lookup
 Lookup ::= NodeLookup | RelationshipLookup
 
 NodeLookup ::= ws K_NODE (NodeIndexLookup | NodeIndexQuery | NodeIdLookup)
 NodeIndexLookup ::= IdentifiedIndexLookup
 NodeIndexQuery ::= IndexQuery
-NodeIdLookup ::= ws "(" (LiteralIds | Parameter | "*") ")"
+NodeIdLookup ::= ws "(" ws (LiteralIds | Parameter | ws "*") ws ")"
 
 RelationshipLookup ::= ws (K_RELATIONSHIP | K_REL) (RelationshipIndexLookup | RelationshipIndexQuery | RelationshipIdLookup)
 RelationshipIndexLookup ::= IdentifiedIndexLookup
 RelationshipIndexQuery ::= IndexQuery
-RelationshipIdLookup ::= ws "(" (LiteralIds | Parameter | "*") ")"
+RelationshipIdLookup ::= ws "(" (LiteralIds | Parameter | ws "*") ws ")"
 
-IdentifiedIndexLookup ::= ws ":" SymbolicNameString "(" SymbolicNameString "=" (StringLiteral | Parameter) ")"
-IndexQuery ::= ws ":" SymbolicNameString "(" (StringLiteral | Parameter) ")"
-LiteralIds ::= UnsignedIntegerLiteral ("," UnsignedIntegerLiteral)*
+IdentifiedIndexLookup ::= ws ":" ws SymbolicNameString ws "(" ws SymbolicNameString ws "=" ws (StringLiteral | Parameter) ws ")"
+IndexQuery ::= ws ":" ws SymbolicNameString ws "(" ws (StringLiteral | Parameter) ws ")" ws
+LiteralIds ::= UnsignedIntegerLiteral (ws ","ws  UnsignedIntegerLiteral)*
 
 //-- Match
 Match ::= ws (K_OPTIONAL_MATCH | K_MATCH) Pattern Hint* Where?
-Hint ::= (ws K_USING_INDEX Identifier NodeLabel "(" PropertyKeyName ")")
-       | (ws K_USING_JOIN_ON Identifier ("," Identifier)*)
+Hint ::= (ws K_USING_INDEX Identifier NodeLabel ws "(" ws PropertyKeyName ws ")" ws)
+       | (ws K_USING_JOIN_ON Identifier (ws "," ws Identifier)*)
        | (ws K_USING_SCAN Identifier NodeLabel)
 
 //-- Merge
@@ -211,14 +245,14 @@ MergeAction ::= (ws K_ON_MATCH SetClause)
               | (ws K_ON_CREATE SetClause)
 
 //-- SetClause
-SetClause ::= ws K_SET SetItem ("," SetItem)*
-SetItem ::= (ws PropertyExpression "=" Expression)
-          | (ws Identifier "=" Expression)
-          | (ws Identifier "+=" Expression)
+SetClause ::= ws K_SET SetItem (ws "," ws SetItem)*
+SetItem ::= (ws PropertyExpression ws "=" ws Expression)
+          | (ws Identifier ws "=" ws Expression)
+          | (ws Identifier ws "+=" ws Expression)
           | (ws Identifier NodeLabels)
 
 //-- Remove
-Remove ::= ws K_REMOVE RemoveItem ("," RemoveItem)*
+Remove ::= ws K_REMOVE RemoveItem (ws "," ws RemoveItem)*
 RemoveItem ::= (Identifier NodeLabels) | PropertyExpression
 
 //-- Return
@@ -227,10 +261,10 @@ With ::= (ws K_WITH_DISTINCT ReturnBody Where?)
 Return ::= (ws K_RETURN_DISTINCT ReturnBody)
          | (ws K_RETURN ReturnBody)
 ReturnBody ::= ReturnItems Order? Skip? Limit?
-ReturnItems ::= (ws "*" ReturnItem? ("," ReturnItem)*)
-              | (ws ReturnItem ("," ReturnItem)*)
+ReturnItems ::= (ws "*" ws ReturnItem? (ws "," ws ReturnItem)*)
+              | (ws ReturnItem (ws "," ws ReturnItem)*)
 ReturnItem ::= (Expression K_AS Identifier) | (Expression)
-Order ::= ws K_ORDER_BY SortItem ("," SortItem)*
+Order ::= ws K_ORDER_BY SortItem (ws "," ws SortItem)*
 SortItem ::= (Expression (K_DESCENDING | K_DESC))
            | (Expression (K_ASCENDING | K_ASC)?)
 Skip ::= ws K_SKIP Expression
@@ -239,22 +273,22 @@ Limit ::= ws K_LIMIT Expression
 //-- Other
 Create ::= (ws K_CREATE_UNIQUE Pattern)
          | (ws K_CREATE Pattern)
-Delete ::= (ws K_DELETE Expression ("," Expression)*)
-         | (ws K_DETACH_DELETE Expression ("," Expression)*)
+Delete ::= (ws K_DELETE Expression (ws "," ws Expression)*)
+         | (ws K_DETACH_DELETE Expression (ws "," ws Expression)*)
 Unwind ::= ws K_UNWIND Expression K_AS Identifier
-Foreach ::= ws K_FOREACH "(" Identifier K_IN Expression "|" Clause+ ")"
+Foreach ::= ws K_FOREACH ws "(" ws Identifier K_IN Expression ws "|" ws Clause+ ws ")"
 Where ::= ws K_WHERE Expression
 
 /*************************
  * Patterns
  */
-Pattern ::= PatternPart ("," PatternPart)*
-PatternPart ::= (Identifier "=" AnonymousPatternPart) | AnonymousPatternPart
+Pattern ::= PatternPart (ws "," ws PatternPart)*
+PatternPart ::= (Identifier ws "=" ws AnonymousPatternPart) | AnonymousPatternPart
 AnonymousPatternPart ::= ShortestPathPattern | PatternElement
-ShortestPathPattern ::= (ws K_SHORTESTPATH "(" PatternElement ")")
-                      | (ws K_ALLSHORTESTPATHS "(" PatternElement ")")
+ShortestPathPattern ::= (ws K_SHORTESTPATH ws "(" ws PatternElement ws ")" ws)
+                      | (ws K_ALLSHORTESTPATHS ws "(" ws PatternElement ws ")" ws)
 PatternElement ::= (ws NodePattern PatternElementChain*)
-                 | (ws "(" PatternElement ")") // Probably it's OK that there is "empty match" case.
+                 | (ws "(" ws PatternElement ws ")" ws) // Probably it's OK that there is "empty match" case.
 PatternElementChain ::= RelationshipPattern NodePattern
 
 RelationshipPattern ::= (LeftArrowHead Dash RelationshipDetail? Dash RightArrowHead)
@@ -262,9 +296,9 @@ RelationshipPattern ::= (LeftArrowHead Dash RelationshipDetail? Dash RightArrowH
                       | (Dash RelationshipDetail? Dash RightArrowHead)
                       | (Dash RelationshipDetail? Dash)
 
-RelationshipDetail ::= ws "[" MaybeIdentifier "?"? RelationshipTypes MaybeVariableLength MaybeProperties "]"
-RelationshipTypes ::= ws (":" RelTypeName ("|" ":"? RelTypeName)*)?
-MaybeVariableLength ::= ws ("*" RangeLiteral?)?
+RelationshipDetail ::= ws "[" ws MaybeIdentifier ws "?"? ws RelationshipTypes MaybeVariableLength MaybeProperties "]"
+RelationshipTypes ::= (ws ":" ws RelTypeName (ws "|" ws ":"? ws RelTypeName)*)?
+MaybeVariableLength ::= (ws "*" ws RangeLiteral?)?
 
 NodePattern ::= (ws "(" MaybeIdentifier MaybeNodeLabels MaybeProperties ")")
               | (MaybeIdentifier MaybeNodeLabels MaybeProperties)
@@ -273,30 +307,96 @@ MaybeNodeLabels ::= NodeLabels?
 MaybeIdentifier ::= Identifier?
 MaybeProperties ::= (MapLiteral | Parameter)?
 
+RelationshipsPattern ::= NodePattern PatternElementChain+
+
 /*************************
  * Expression
  */
 Expression ::= Expression12
-Expression12 ::= Expression11 K_OR Expression11
-PropertyExpression ::= ws "propexpstub"
+private Expression12 ::= Expression11 (ws K_OR Expression11)*
+private Expression11 ::= Expression10 (ws K_XOR Expression10)*
+private Expression10 ::= Expression9 (ws K_AND Expression9)*
+private Expression9 ::= (ws K_NOT Expression9) | Expression8
+private Expression8 ::= Expression7 PartialComparisonExpression*
+private PartialComparisonExpression ::= (ws "=" Expression7)
+                                      | (ws "<>" Expression7)
+                                      | (ws "!=" Expression7)
+                                      | (ws "<" Expression7)
+                                      | (ws ">" Expression7)
+                                      | (ws "<=" Expression7)
+                                      | (ws ">=" Expression7)
+private Expression7 ::= Expression6 ((ws "-" Expression6) | (ws "+" Expression6))*
+private Expression6 ::= Expression5 ((ws "*" Expression5) | (ws "/" Expression5) | (ws "%" Expression5))*
+private Expression5 ::= Expression4 (ws "^" Expression4)*
+private Expression4 ::= Expression3 | (ws "-" Expression4) | (ws "+" Expression4)
+private Expression3 ::= Expression2 (
+    (ws "[" Expression ws "]")
+  | (ws "[" Expression? ws ".." Expression? ws "]")
+  | (ws "=~" Expression2)
+  | (ws K_IN Expression2)
+  | (ws K_STARTS_WITH  Expression2)
+  | (ws K_ENDS_WITH  Expression2)
+  | (ws K_CONTAINS  Expression2)
+  | (ws K_IS_NULL  Expression2)
+  | (ws K_IS_NOT_NULL  Expression2)
+)*
+private Expression2 ::= Expression1 (PropertyLookup | NodeLabels)*
+private Expression1 ::= NumberLiteral
+              | StringLiteral
+              | Parameter
+              | (ws K_TRUE)
+              | (ws K_FALSE)
+              | (ws K_NULL)
+              | CaseExpression
+              | (ws K_COUNT ws "(" ws "*" ws ")")
+              | MapLiteral
+              | ListComprehension
+              | (ws "[" Expression? (ws "," Expression)* ws "]")
+              | (ws K_FILTER ws "(" FilterExpression ws ")")
+              | (ws K_EXTRACT ws "(" FilterExpression (ws "|" Expression)? ws ")")
+              | (ws K_REDUCE ws "(" Identifier ws "=" Expression ws "," IdInColl ws "|" Expression ws ")")
+              | (ws K_ALL ws "(" FilterExpression ws ")")
+              | (ws K_ANY ws "(" FilterExpression ws ")")
+              | (ws K_NONE ws "(" FilterExpression ws ")")
+              | (ws K_SINGLE ws "(" FilterExpression ws ")")
+              | ShortestPathPattern
+              | RelationshipsPattern
+              | parenthesizedExpression
+              | FunctionInvocation
+              | Identifier
+
+PropertyLookup ::= ws "." PropertyKeyName // todo: finish this rule, legacy part is missing
+ListComprehension ::= ws "[" FilterExpression (ws "|"  Expression)? ws "]"
+FilterExpression ::= ws IdInColl (ws K_WHERE)? Expression
+IdInColl ::= ws Identifier ws K_IN Expression
+parenthesizedExpression ::= ws "(" Expression ")"
+FunctionInvocation ::= FunctionName ws "(" ws K_DISTINCT? Expression? (ws "," Expression)* ws ")"
+CaseExpression ::= ((ws K_CASE CaseAlternatives+) | (ws K_CASE Expression CaseAlternatives+))
+                   (ws K_ELSE Expression)?
+                   ws K_END
+CaseAlternatives ::= ws K_WHEN Expression ws K_THEN Expression
+PropertyExpression ::= Expression1 (PropertyLookup)+
 
 /*************************
  * Literals
  */
 Identifier ::= SymbolicNameString
-Parameter ::= ws "{" (SymbolicNameString | UnsignedDecimalInteger) "}"
-NodeLabel ::= ws ":" LabelName
+FunctionName ::= SymbolicNameString
+Parameter ::= ws "{" ws (SymbolicNameString | UnsignedDecimalInteger) ws "}" ws
+NodeLabel ::= ws ":" ws LabelName
 StringLiteral ::= ws l_string
 LabelName ::= SymbolicNameString
-RelType ::= ws ":" RelTypeName
+RelType ::= ws ":" ws RelTypeName
 RelTypeName ::= SymbolicNameString
 PropertyKeyName ::= SymbolicNameString
-RangeLiteral ::= (UnsignedIntegerLiteral? ".." UnsignedIntegerLiteral?) | (UnsignedIntegerLiteral)
-MapLiteral ::= ws "{" (PropertyKeyName ":" Expression)? ("," (PropertyKeyName ":" Expression))* "}"
+RangeLiteral ::= (UnsignedIntegerLiteral? ws ".." ws UnsignedIntegerLiteral?) | (UnsignedIntegerLiteral)
+MapLiteral ::= ws "{" ws (PropertyKeyName ws ":" ws Expression)? (ws "," ws PropertyKeyName ws ":" ws Expression)* ws "}" ws
 NodeLabels ::= NodeLabel+
 //SignedIntegerLiteral ::= HexInteger | OctalInteger | DecimalInteger // todo: this is real implementation
 SignedIntegerLiteral ::= SignedDecimalInteger
 UnsignedIntegerLiteral ::= UnsignedDecimalInteger
+NumberLiteral ::= DoubleLiteral | SignedIntegerLiteral
+DoubleLiteral ::= l_decimal // todo: make real double here
 
 /*************************
  * Base
@@ -306,7 +406,7 @@ private EscapedSymbolicNameString ::= ws l_identifier_text
 private UnescapedSymbolicNameString ::= ws l_identifier
 private UnsignedDecimalInteger ::= ws l_integer
 private SignedDecimalInteger ::= ws l_integer
-private Dash ::= ws "-" // todo: migrate all variants
-private LeftArrowHead ::= ws "<" // todo: migrate all variants
-private RightArrowHead ::= ws ">" // todo: migrate all variants
+private Dash ::= ws "-" ws // todo: migrate all variants
+private LeftArrowHead ::= ws "<" ws // todo: migrate all variants
+private RightArrowHead ::= ws ">" ws // todo: migrate all variants
 private ws ::= l_space?

@@ -46,4 +46,10 @@ public class CypherNodeLookupImpl extends ASTWrapperPsiElement implements Cypher
     return findNotNullChildByType(K_NODE);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getLSpace() {
+    return findChildByType(L_SPACE);
+  }
+
 }

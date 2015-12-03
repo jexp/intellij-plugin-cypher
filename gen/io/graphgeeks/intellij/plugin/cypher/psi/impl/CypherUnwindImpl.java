@@ -46,4 +46,10 @@ public class CypherUnwindImpl extends ASTWrapperPsiElement implements CypherUnwi
     return findNotNullChildByType(K_UNWIND);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getLSpace() {
+    return findChildByType(L_SPACE);
+  }
+
 }

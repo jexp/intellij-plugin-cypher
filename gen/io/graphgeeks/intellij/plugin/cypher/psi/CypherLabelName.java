@@ -13,4 +13,7 @@ public interface CypherLabelName extends PsiElement {
   @Nullable
   PsiElement getLIdentifierText();
 
+  @Nullable
+  PsiElement getLSpace();
+
 }

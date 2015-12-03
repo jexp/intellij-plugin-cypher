@@ -13,4 +13,7 @@ public interface CypherCreateRelationshipPropertyExistenceConstraint extends Psi
   @NotNull
   PsiElement getKCreate();
 
+  @Nullable
+  PsiElement getLSpace();
+
 }

@@ -34,4 +34,10 @@ public class CypherDropUniqueConstraintImpl extends ASTWrapperPsiElement impleme
     return findNotNullChildByType(K_DROP);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getLSpace() {
+    return findChildByType(L_SPACE);
+  }
+
 }
