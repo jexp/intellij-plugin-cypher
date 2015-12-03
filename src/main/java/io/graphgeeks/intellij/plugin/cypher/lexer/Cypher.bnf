@@ -31,6 +31,13 @@
     CREATE_INDEX_ON="regexp:(C|c)(R|r)(E|e)(A|a)(T|t)(E|e) (I|i)(N|n)(D|d)(E|e)(X|x) (O|o)(N|n)"
     DROP="regexp:(D|d)(R|r)(O|o)(P|p)"
     DROP_INDEX_ON="regexp:(D|d)(R|r)(O|o)(P|p) (I|i)(N|n)(D|d)(E|e)(X|x) (O|o)(N|n)"
+    START="regexp:(S|s)(T|t)(A|a)(R|r)(T|t)"
+    WHERE="regexp:(W|w)(H|h)(E|e)(R|r)(E|e)"
+    NODE="regexp:(N|n)(O|o)(D|d)(E|e)"
+    RELATIONSHIP="regexp:(R|r)(E|e)(L|l)(A|a)(T|t)(I|i)(O|o)(N|n)(S|s)(H|h)(I|i)(P|p)"
+    REL="regexp:(R|r)(E|e)(L|l)"
+    OPTIONAL_MATCH="regexp:(O|o)(P|p)(T|t)(I|i)(O|o)(N|n)(A|a)(L|l) (M|m)(A|a)(T|t)(C|c)(H|h)"
+    MATCH="regexp:(M|m)(A|a)(T|t)(C|c)(H|h)"
 
     // literals
     space='regexp:\s+'
@@ -38,10 +45,13 @@
     identifier_text="regexp:\`[^`]+\`"
     decimal="regexp:[+-]?(([1-9]\d+)|([0-9]))\.\d+"
     integer="regexp:[+-]?(([1-9]\d+)|([0-9]))"
+    unsigned_decimal_integer="regexp:\d+"
     string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
 
-    leftParent="("
-    rightParent=")"
+    leftBrace="("
+    rightBrace=")"
+    leftCurlyBrace="{"
+    rightCurlyBrace="}"
     semicolon=";"
     colon=":"
     dot="."
@@ -52,6 +62,7 @@
     minus="-"
     mul="*"
     bactick="`"
+    comma=","
 
     // comments
     line_comment="regexp://.*"
@@ -64,10 +75,14 @@ cypher ::= Statements *
 private Statements ::= !<<eof>> Statement ';' {pin=1 recoverWhile=statement_recover}
 private statement_recover ::= !(';')
 
-//---- Statement
+/*************************
+ * Statement
+ */
 Statement ::= Command | Query
 
-//---- Command
+/*************************
+ * Command
+ */
 Command ::= CreateUniqueConstraint
           | CreateNodePropertyExistenceConstraint
           | CreateRelationshipPropertyExistenceConstraint
@@ -93,16 +108,21 @@ RelationshipPatternSyntax ::= ("()-[" Identifier RelType "]-()")
       | ("()-[" Identifier RelType "]->()")
       | ("()<-[" Identifier RelType "]-()")
 
-//---- Query
-
+/*************************
+ * Query
+ */
 Query ::= RegularQuery
       //| BulkImportQuery
-RegularQuery ::= SingleQuery Union *
+
+/*************************
+ * Clauses
+ */
+RegularQuery ::= SingleQuery Union*
 Union ::= (UNION_ALL | UNION) SingleQuery
-SingleQuery ::= Clause *
+SingleQuery ::= Clause*
 Clause ::= LoadCSV
-//    | Start
-//    | Match
+    | Start
+    | Match
 //    | Unwind
 //    | Merge
 //    | Create
@@ -113,21 +133,63 @@ Clause ::= LoadCSV
 //    | With
 //    | Return
 //    | Pragma
-LoadCSV ::= LOAD_CSV WITH_HEADERS? FROM Expression AS Identifier (FIELDTERMINATOR string)?
 
-//---- Expression
+//-- Load csv
+LoadCSV ::= LOAD_CSV WITH_HEADERS? FROM Expression AS Identifier (FIELDTERMINATOR StringLiteral)?
+
+//-- Start
+Start ::= START (StartPoint ("," StartPoint)*)? Where?
+StartPoint ::= Identifier "=" Lookup
+Lookup ::= NodeLookup | RelationshipLookup
+
+NodeLookup ::= NODE (NodeIndexLookup | NodeIndexQuery | NodeIdLookup)
+NodeIndexLookup ::= IdentifiedIndexLookup
+NodeIndexQuery ::= IndexQuery
+NodeIdLookup ::= "(" (LiteralIds | Parameter | "*") ")"
+
+RelationshipLookup ::= (RELATIONSHIP | REL) (RelationshipIndexLookup | RelationshipIndexQuery | RelationshipIdLookup)
+RelationshipIndexLookup ::= IdentifiedIndexLookup
+RelationshipIndexQuery ::= IndexQuery
+RelationshipIdLookup ::= "(" (LiteralIds | Parameter | "*") ")"
+
+IdentifiedIndexLookup ::= ":" SymbolicNameString "(" SymbolicNameString "=" (StringLiteral | Parameter) ")"
+IndexQuery ::= ":" SymbolicNameString "(" (StringLiteral | Parameter) ")"
+LiteralIds ::= UnsignedIntegerLiteral ("," UnsignedIntegerLiteral)*
+
+//-- Match
+Match ::= (OPTIONAL_MATCH | MATCH) Pattern Hint* Where?
+Hint ::= (
+      group(keyword("USING INDEX") ~~ Identifier ~~ NodeLabel ~~ "(" ~~ PropertyKeyName ~~ ")") ~~>> (ast.UsingIndexHint(_, _, _))
+    | group(keyword("USING JOIN ON") ~~ oneOrMore(Identifier, separator = CommaSep)) ~~>> (ast.UsingJoinHint(_))
+    | group(keyword("USING SCAN") ~~ Identifier ~~ NodeLabel) ~~>> (ast.UsingScanHint(_, _))
+  )
+
+//-- Other
+Where ::= WHERE Expression
+
+/*************************
+ * Expression
+ */
 Expression ::= "expstub"
 PropertyExpression ::= "propexpstub"
 
-//---- Literals
+/*************************
+ * Literals
+ */
 Identifier ::= SymbolicNameString
+Parameter ::= "{" (SymbolicNameString | UnsignedDecimalInteger) "}"
 NodeLabel ::= ":" LabelName
+StringLiteral ::= string
 LabelName ::= SymbolicNameString
 RelType ::= ":" RelTypeName
 RelTypeName ::= SymbolicNameString
 PropertyKeyName ::= SymbolicNameString
+UnsignedIntegerLiteral ::= UnsignedDecimalInteger
 
-//---- Base
+/*************************
+ * Base
+ */
 private SymbolicNameString ::=  UnescapedSymbolicNameString | EscapedSymbolicNameString
 private EscapedSymbolicNameString ::= identifier_text
 private UnescapedSymbolicNameString ::= identifier
+private UnsignedDecimalInteger ::= unsigned_decimal_integer
