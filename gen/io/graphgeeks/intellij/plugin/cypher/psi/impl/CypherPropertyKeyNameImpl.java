@@ -11,15 +11,27 @@ import static io.graphgeeks.intellij.plugin.cypher.psi.CypherTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.graphgeeks.intellij.plugin.cypher.psi.*;
 
-public class CypherPropertyImpl extends ASTWrapperPsiElement implements CypherProperty {
+public class CypherPropertyKeyNameImpl extends ASTWrapperPsiElement implements CypherPropertyKeyName {
 
-  public CypherPropertyImpl(ASTNode node) {
+  public CypherPropertyKeyNameImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof CypherVisitor) ((CypherVisitor)visitor).visitProperty(this);
+    if (visitor instanceof CypherVisitor) ((CypherVisitor)visitor).visitPropertyKeyName(this);
     else super.accept(visitor);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getLIdentifier() {
+    return findChildByType(L_IDENTIFIER);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getLIdentifierText() {
+    return findChildByType(L_IDENTIFIER_TEXT);
   }
 
 }

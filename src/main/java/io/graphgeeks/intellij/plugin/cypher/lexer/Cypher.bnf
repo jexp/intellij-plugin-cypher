@@ -16,6 +16,7 @@
     // keywords
     K_MATCH="regexp:(M|m)(A|a)(T|t)(C|c)(H|h)"
     K_RETURN="regexp:(R|r)(E|e)(T|t)(U|u)(R|r)(N|n)"
+    K_RETURN_DISTINCT="regexp:(R|r)(E|e)(T|t)(U|u)(R|r)(N|n) (D|d)(I|i)(S|s)(T|t)(I|i)(N|n)(C|c)(T|t)"
     K_UNION="regexp:(U|u)(N|n)(I|i)(O|o)(N|n)"
     K_UNION_ALL="regexp:(U|u)(N|n)(I|i)(O|o)(N|n) (A|a)(L|l)(L|l)"
     K_LOAD_CSV="regexp:((L|l)(O|o)(A|a)(D|d) (C|c)(S|s)(V|v))"
@@ -66,13 +67,14 @@
     K_USING_PERIODIC_COMMIT="regexp:(U|u)(S|s)(I|i)(N|n)(G|g) (P|p)(E|e)(R|r)(I|i)(O|o)(D|d)(I|i)(C|c) (C|c)(O|o)(M|m)(M|m)(I|i)(T|t)"
 
     // literals
-    space='regexp:\s+'
-    identifier="regexp:(^[a-zA-Z][a-zA-Z0-9_]*)|(^[_][a-zA-Z0-9_]+)"
-    identifier_text="regexp:\`[^`]+\`"
-    decimal="regexp:[+-]?(([1-9]\d+)|([0-9]))\.\d+"
-    integer="regexp:[+-]?(([1-9]\d+)|([0-9]))"
-    string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+    l_space='regexp:\s+'
+    l_identifier="regexp:[a-zA-Z_$][a-zA-Z_$\d]+"
+    l_identifier_text="regexp:\`[^`]+\`"
+    l_decimal="regexp:[+-]?(([1-9]\d+)|([0-9]))\.\d+"
+    l_integer="regexp:[+-]?(([1-9]\d+)|([0-9]))"
+    l_string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
 
+    // base
     leftBrace="("
     rightBrace=")"
     leftCurlyBrace="{"
@@ -94,6 +96,11 @@
     pipe="|"
     range=".."
     plusEquals="+="
+
+    startRelPattern="()-["
+    startRelPatternDirected="()<-["
+    endRelPattern="]-()"
+    endRelPatternDirected="]->()"
 
     // comments
     lineComment="regexp://.*"
@@ -218,7 +225,7 @@ RemoveItem ::= (Identifier NodeLabels) | PropertyExpression
 With ::= (K_WITH_DISTINCT ReturnBody Where?)
        | (K_WITH ReturnBody Where?)
 Return ::= (K_RETURN_DISTINCT ReturnBody)
-         | (K_RETURN  ReturnBody)
+         | (K_RETURN ReturnBody)
 ReturnBody ::= ReturnItems Order? Skip? Limit?
 ReturnItems ::= ("*" ReturnItem? ("," ReturnItem)*)
               | (ReturnItem ("," ReturnItem)*)
@@ -226,12 +233,13 @@ ReturnItem ::= (Expression K_AS Identifier) | (Expression)
 Order ::= K_ORDER_BY SortItem ("," SortItem)*
 SortItem ::= (Expression (K_DESCENDING | K_DESC))
            | (Expression (K_ASCENDING | K_ASC)?)
-Skip ::= K_SKIP  Expression
+Skip ::= K_SKIP Expression
 Limit ::= K_LIMIT Expression
 
 //-- Other
 Create ::= (K_CREATE_UNIQUE Pattern) | (K_CREATE Pattern)
-Delete ::= (K_DELETE Expression ("," Expression)*) | (K_DETACH_DELETE Expression ("," Expression)*)
+Delete ::= (K_DELETE Expression ("," Expression)*)
+         | (K_DETACH_DELETE Expression ("," Expression)*)
 Unwind ::= K_UNWIND Expression K_AS Identifier
 Foreach ::= K_FOREACH "(" Identifier K_IN Expression "|" Clause+ ")"
 Where ::= K_WHERE Expression
@@ -244,7 +252,8 @@ PatternPart ::= (Identifier "=" AnonymousPatternPart) | AnonymousPatternPart
 AnonymousPatternPart ::= ShortestPathPattern | PatternElement
 ShortestPathPattern ::= (K_SHORTESTPATH "(" PatternElement ")")
                       | (K_ALLSHORTESTPATHS "(" PatternElement ")")
-PatternElement ::= (NodePattern PatternElementChain*) | ("(" PatternElement ")") // Probably it's OK that there is "empty match" case.
+PatternElement ::= (NodePattern PatternElementChain*)
+                 | ("(" PatternElement ")") // Probably it's OK that there is "empty match" case.
 PatternElementChain ::= RelationshipPattern NodePattern
 
 RelationshipPattern ::= (LeftArrowHead Dash RelationshipDetail? Dash RightArrowHead)
@@ -252,9 +261,8 @@ RelationshipPattern ::= (LeftArrowHead Dash RelationshipDetail? Dash RightArrowH
                       | (Dash RelationshipDetail? Dash RightArrowHead)
                       | (Dash RelationshipDetail? Dash)
 
-RelationshipDetail ::=
-        "[" MaybeIdentifier "?"? RelationshipTypes MaybeVariableLength MaybeProperties "]"
-RelationshipTypes ::= (":" RelTypeName ("|" ":"? RelTypeName)?)
+RelationshipDetail ::= "[" MaybeIdentifier "?"? RelationshipTypes MaybeVariableLength MaybeProperties "]"
+RelationshipTypes ::= (":" RelTypeName ("|" ":"? RelTypeName)*)
 MaybeVariableLength ::= ("*" RangeLiteral?)?
 
 NodePattern ::= ("(" MaybeIdentifier MaybeNodeLabels MaybeProperties ")")
@@ -276,7 +284,7 @@ PropertyExpression ::= "propexpstub"
 Identifier ::= SymbolicNameString
 Parameter ::= "{" (SymbolicNameString | UnsignedDecimalInteger) "}"
 NodeLabel ::= ":" LabelName
-StringLiteral ::= string
+StringLiteral ::= l_string
 LabelName ::= SymbolicNameString
 RelType ::= ":" RelTypeName
 RelTypeName ::= SymbolicNameString
@@ -292,10 +300,11 @@ UnsignedIntegerLiteral ::= UnsignedDecimalInteger
  * Base
  */
 private SymbolicNameString ::=  UnescapedSymbolicNameString | EscapedSymbolicNameString
-private EscapedSymbolicNameString ::= identifier_text
-private UnescapedSymbolicNameString ::= identifier
-private UnsignedDecimalInteger ::= integer
-private SignedDecimalInteger ::= integer
+private EscapedSymbolicNameString ::= l_identifier_text
+private UnescapedSymbolicNameString ::= l_identifier
+private UnsignedDecimalInteger ::= l_integer
+private SignedDecimalInteger ::= l_integer
 private Dash ::= "-" // todo: migrate all variants
 private LeftArrowHead ::= "<" // todo: migrate all variants
 private RightArrowHead ::= ">" // todo: migrate all variants
+private ws ::= l_space?
