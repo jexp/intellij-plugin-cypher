@@ -52,14 +52,25 @@
     K_DELETE="regexp:(D|d)(E|e)(L|l)(E|e)(T|t)(E|e)"
     K_DETACH_DELETE="regexp:(D|d)(E|e)(T|t)(A|a)(C|c)(H|h) (D|d)(E|e)(L|l)(E|e)(T|t)(E|e)"
     K_REMOVE="regexp:(R|r)(E|e)(M|m)(O|o)(V|v)(E|e)"
+    K_FOREACH="regexp:(F|f)(O|o)(R|r)(E|e)(A|a)(C|c)(H|h)"
+    K_IN="regexp:(I|i)(N|n)"
+    K_WITH_DISTINCT="regexp:(W|w)(I|i)(T|t)(H|h) (D|d)(I|i)(S|s)(T|t)(I|i)(N|n)(C|c)(T|t)"
+    K_WITH="regexp:(W|w)(I|i)(T|t)(H|h)"
+    K_ORDER_BY="regexp:(O|o)(R|r)(D|d)(E|e)(R|r) (B|b)(Y|y)"
+    K_DESCENDING="regexp:(D|d)(E|e)(S|s)(C|c)(E|e)(N|n)(D|d)(I|i)(N|n)(G|g)"
+    K_DESC="regexp:(D|d)(E|e)(S|s)(C|c)"
+    K_ASCENDING="regexp:(A|a)(S|s)(C|c)(E|e)(N|n)(D|d)(I|i)(N|n)(G|g)"
+    K_ASC="regexp:(A|a)(S|s)(C|c)"
+    K_SKIP="regexp:(S|s)(K|k)(I|i)(P|p)"
+    K_LIMIT="regexp:(L|l)(I|i)(M|m)(I|i)(T|t)"
+    K_USING_PERIODIC_COMMIT="regexp:(U|u)(S|s)(I|i)(N|n)(G|g) (P|p)(E|e)(R|r)(I|i)(O|o)(D|d)(I|i)(C|c) (C|c)(O|o)(M|m)(M|m)(I|i)(T|t)"
 
     // literals
     space='regexp:\s+'
-    identifier="regexp:[\w\d\$\_]+"
+    identifier="regexp:(^[a-zA-Z][a-zA-Z0-9_]*)|(^[_][a-zA-Z0-9_]+)"
     identifier_text="regexp:\`[^`]+\`"
     decimal="regexp:[+-]?(([1-9]\d+)|([0-9]))\.\d+"
     integer="regexp:[+-]?(([1-9]\d+)|([0-9]))"
-    unsigned_decimal_integer="regexp:\d+"
     string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
 
     leftBrace="("
@@ -131,15 +142,12 @@ RelationshipPatternSyntax ::= ("()-[" Identifier RelType "]-()") // todo: move t
 /*************************
  * Query
  */
-Query ::= RegularQuery
-      //| BulkImportQuery
+Query ::= RegularQuery | BulkImportQuery // empty input is OK?
 
-/*************************
- * Clauses
- */
+//-- RegularQuery
 RegularQuery ::= SingleQuery Union*
 Union ::= (K_UNION_ALL | K_UNION) SingleQuery
-SingleQuery ::= Clause*
+SingleQuery ::= Clause+
 Clause ::= LoadCSV
     | Start
     | Match
@@ -149,11 +157,19 @@ Clause ::= LoadCSV
     | SetClause
     | Delete
     | Remove
-//    | Foreach
-//    | With
-//    | Return
-//    | Pragma
+    | Foreach
+    | With
+    | Return
+    //| Pragma // todo: what the hell is this?
 
+//-- BulkImportQuery
+BulkImportQuery ::= PeriodicCommitHint LoadCSVQuery
+PeriodicCommitHint ::= K_USING_PERIODIC_COMMIT SignedIntegerLiteral?
+LoadCSVQuery ::= LoadCSV Clause*
+
+/*************************
+ * Clauses
+ */
 //-- Load csv
 LoadCSV ::= K_LOAD_CSV K_WITH_HEADERS? K_FROM Expression K_AS Identifier (K_FIELDTERMINATOR StringLiteral)?
 
@@ -198,10 +214,26 @@ SetItem ::= (PropertyExpression "=" Expression)
 Remove ::= K_REMOVE RemoveItem ("," RemoveItem)*
 RemoveItem ::= (Identifier NodeLabels) | PropertyExpression
 
+//-- Return
+With ::= (K_WITH_DISTINCT ReturnBody Where?)
+       | (K_WITH ReturnBody Where?)
+Return ::= (K_RETURN_DISTINCT ReturnBody)
+         | (K_RETURN  ReturnBody)
+ReturnBody ::= ReturnItems Order? Skip? Limit?
+ReturnItems ::= ("*" ReturnItem? ("," ReturnItem)*)
+              | (ReturnItem ("," ReturnItem)*)
+ReturnItem ::= (Expression K_AS Identifier) | (Expression)
+Order ::= K_ORDER_BY SortItem ("," SortItem)*
+SortItem ::= (Expression (K_DESCENDING | K_DESC))
+           | (Expression (K_ASCENDING | K_ASC)?)
+Skip ::= K_SKIP  Expression
+Limit ::= K_LIMIT Expression
+
 //-- Other
 Create ::= (K_CREATE_UNIQUE Pattern) | (K_CREATE Pattern)
 Delete ::= (K_DELETE Expression ("," Expression)*) | (K_DETACH_DELETE Expression ("," Expression)*)
 Unwind ::= K_UNWIND Expression K_AS Identifier
+Foreach ::= K_FOREACH "(" Identifier K_IN Expression "|" Clause+ ")"
 Where ::= K_WHERE Expression
 
 /*************************
@@ -222,7 +254,7 @@ RelationshipPattern ::= (LeftArrowHead Dash RelationshipDetail? Dash RightArrowH
 
 RelationshipDetail ::=
         "[" MaybeIdentifier "?"? RelationshipTypes MaybeVariableLength MaybeProperties "]"
-RelationshipTypes ::= (":" RelTypeName ("|" ":"? RelTypeName))?
+RelationshipTypes ::= (":" RelTypeName ("|" ":"? RelTypeName)?)
 MaybeVariableLength ::= ("*" RangeLiteral?)?
 
 NodePattern ::= ("(" MaybeIdentifier MaybeNodeLabels MaybeProperties ")")
@@ -249,10 +281,12 @@ LabelName ::= SymbolicNameString
 RelType ::= ":" RelTypeName
 RelTypeName ::= SymbolicNameString
 PropertyKeyName ::= SymbolicNameString
-UnsignedIntegerLiteral ::= UnsignedDecimalInteger
 RangeLiteral ::= (UnsignedIntegerLiteral? ".." UnsignedIntegerLiteral?) | (UnsignedIntegerLiteral)
 MapLiteral ::= "{" (PropertyKeyName ":" Expression)? ("," (PropertyKeyName ":" Expression))* "}"
 NodeLabels ::= NodeLabel+
+//SignedIntegerLiteral ::= HexInteger | OctalInteger | DecimalInteger // todo: this is real implementation
+SignedIntegerLiteral ::= SignedDecimalInteger
+UnsignedIntegerLiteral ::= UnsignedDecimalInteger
 
 /*************************
  * Base
@@ -260,7 +294,8 @@ NodeLabels ::= NodeLabel+
 private SymbolicNameString ::=  UnescapedSymbolicNameString | EscapedSymbolicNameString
 private EscapedSymbolicNameString ::= identifier_text
 private UnescapedSymbolicNameString ::= identifier
-private UnsignedDecimalInteger ::= unsigned_decimal_integer
+private UnsignedDecimalInteger ::= integer
+private SignedDecimalInteger ::= integer
 private Dash ::= "-" // todo: migrate all variants
 private LeftArrowHead ::= "<" // todo: migrate all variants
 private RightArrowHead ::= ">" // todo: migrate all variants
