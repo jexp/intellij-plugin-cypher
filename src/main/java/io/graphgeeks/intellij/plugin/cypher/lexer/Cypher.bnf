@@ -212,10 +212,10 @@ MergeAction ::= (ws K_ON_MATCH SetClause)
 
 //-- SetClause
 SetClause ::= ws K_SET SetItem ("," SetItem)*
-SetItem ::= (PropertyExpression "=" Expression)
-          | (Identifier "=" Expression)
-          | (Identifier "+=" Expression)
-          | (Identifier NodeLabels)
+SetItem ::= (ws PropertyExpression "=" Expression)
+          | (ws Identifier "=" Expression)
+          | (ws Identifier "+=" Expression)
+          | (ws Identifier NodeLabels)
 
 //-- Remove
 Remove ::= ws K_REMOVE RemoveItem ("," RemoveItem)*
@@ -276,7 +276,8 @@ MaybeProperties ::= (MapLiteral | Parameter)?
 /*************************
  * Expression
  */
-Expression ::= ws "expstub"
+Expression ::= Expression12
+Expression12 ::= Expression11 K_OR Expression11
 PropertyExpression ::= ws "propexpstub"
 
 /*************************
