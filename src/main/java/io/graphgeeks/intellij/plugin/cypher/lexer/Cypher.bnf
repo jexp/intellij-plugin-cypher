@@ -43,6 +43,15 @@
     K_USING_SCAN="regexp:(U|u)(S|s)(I|i)(N|n)(G|g) (S|s)(C|c)(A|a)(N|n)"
     K_SHORTESTPATH="regexp:(S|s)(H|h)(O|o)(R|r)(T|t)(E|e)(S|s)(T|t)(P|p)(A|a)(T|t)(H|h)"
     K_ALLSHORTESTPATHS="regexp:(A|a)(L|l)(L|l)(S|s)(H|h)(O|o)(R|r)(T|t)(E|e)(S|s)(T|t)(P|p)(A|a)(T|t)(H|h)(S|s)"
+    K_UNWIND="regexp:(U|u)(N|n)(W|w)(I|i)(N|n)(D|d)"
+    K_MERGE="regexp:(M|m)(E|e)(R|r)(G|g)(E|e)"
+    K_ON_MATCH="regexp:(O|o)(N|n) (M|m)(A|a)(T|t)(C|c)(H|h)"
+    K_ON_CREATE="regexp:(O|o)(N|n) (C|c)(R|r)(E|e)(A|a)(T|t)(E|e)"
+    K_SET="regexp:(S|s)(E|e)(T|t)"
+    K_CREATE_UNIQUE="regexp:(C|c)(R|r)(E|e)(A|a)(T|t)(E|e) (U|u)(N|n)(I|i)(Q|q)(U|u)(E|e)"
+    K_DELETE="regexp:(D|d)(E|e)(L|l)(E|e)(T|t)(E|e)"
+    K_DETACH_DELETE="regexp:(D|d)(E|e)(T|t)(A|a)(C|c)(H|h) (D|d)(E|e)(L|l)(E|e)(T|t)(E|e)"
+    K_REMOVE="regexp:(R|r)(E|e)(M|m)(O|o)(V|v)(E|e)"
 
     // literals
     space='regexp:\s+'
@@ -73,6 +82,7 @@
     questionSign="?"
     pipe="|"
     range=".."
+    plusEquals="+="
 
     // comments
     lineComment="regexp://.*"
@@ -133,12 +143,12 @@ SingleQuery ::= Clause*
 Clause ::= LoadCSV
     | Start
     | Match
-//    | Unwind
-//    | Merge
-//    | Create
-//    | SetClause
-//    | Delete
-//    | Remove
+    | Unwind
+    | Merge
+    | Create
+    | SetClause
+    | Delete
+    | Remove
 //    | Foreach
 //    | With
 //    | Return
@@ -172,7 +182,26 @@ Hint ::= (K_USING_INDEX Identifier NodeLabel "(" PropertyKeyName ")")
        | (K_USING_JOIN_ON Identifier ("," Identifier)*)
        | (K_USING_SCAN Identifier NodeLabel)
 
+//-- Merge
+Merge ::= K_MERGE PatternPart MergeAction*
+MergeAction ::= (K_ON_MATCH SetClause)
+              | (K_ON_CREATE SetClause)
+
+//-- SetClause
+SetClause ::= K_SET SetItem ("," SetItem)*
+SetItem ::= (PropertyExpression "=" Expression)
+          | (Identifier "=" Expression)
+          | (Identifier "+=" Expression)
+          | (Identifier NodeLabels)
+
+//-- Remove
+Remove ::= K_REMOVE RemoveItem ("," RemoveItem)*
+RemoveItem ::= (Identifier NodeLabels) | PropertyExpression
+
 //-- Other
+Create ::= (K_CREATE_UNIQUE Pattern) | (K_CREATE Pattern)
+Delete ::= (K_DELETE Expression ("," Expression)*) | (K_DETACH_DELETE Expression ("," Expression)*)
+Unwind ::= K_UNWIND Expression K_AS Identifier
 Where ::= K_WHERE Expression
 
 /*************************
