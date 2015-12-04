@@ -25,8 +25,8 @@
     <fileTypeFactory implementation="io.graphgeeks.intellij.plugin.cypher.file.CypherFileTypeFactory"/>
     <lang.parserDefinition
             language="Cypher" implementationClass="io.graphgeeks.intellij.plugin.cypher.parser.CypherParserDefinition"/>
-    <!--<lang.syntaxHighlighterFactory-->
-            <!--language="Cypher" implementationClass="io.graphgeeks.intellij.plugin.cypher.highlight.CypherSyntaxHighlightFactory"/>-->
+    <lang.syntaxHighlighterFactory
+            language="Cypher" implementationClass="io.graphgeeks.intellij.plugin.cypher.highlight.CypherSyntaxHighlighterFactory"/>
   </extensions>
 
   <actions>
