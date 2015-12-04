@@ -93,6 +93,7 @@
     K_THEN="regexp:(T|t)(H|h)(E|e)(N|n)"
 
     // literals
+    l_space="regexp:([\ \t\f]|\r|\n|\r\n)+"
     l_identifier="regexp:[a-zA-Z_$][a-zA-Z_$\d]*"
     l_identifier_text="regexp:\`[^`]+\`"
     l_decimal="regexp:[+-]?(([1-9]\d+)|([0-9]))\.\d+"
@@ -286,8 +287,7 @@ PatternPart ::= (Identifier "=" AnonymousPatternPart) | AnonymousPatternPart
 AnonymousPatternPart ::= ShortestPathPattern | PatternElement
 ShortestPathPattern ::= (K_SHORTESTPATH "(" PatternElement ")")
                       | (K_ALLSHORTESTPATHS "(" PatternElement ")")
-PatternElement ::= (NodePattern PatternElementChain*)
-                 | ("(" PatternElement ")") // Probably it's OK that there is "empty match" case.
+PatternElement ::= (NodePattern PatternElementChain*) | ("(" PatternElement ")")
 PatternElementChain ::= RelationshipPattern NodePattern
 
 RelationshipPattern ::= (LeftArrowHead Dash RelationshipDetail? Dash RightArrowHead)
@@ -299,8 +299,9 @@ RelationshipDetail ::= "[" MaybeIdentifier "?"? RelationshipTypes MaybeVariableL
 RelationshipTypes ::= (":" RelTypeName ("|" ":"? RelTypeName)*)?
 MaybeVariableLength ::= ("*" RangeLiteral?)?
 
-NodePattern ::= ("(" MaybeIdentifier MaybeNodeLabels MaybeProperties ")")
-              | (MaybeIdentifier MaybeNodeLabels MaybeProperties)
+NodePattern ::= "(" MaybeIdentifier MaybeNodeLabels MaybeProperties ")"
+// disable legacy bare nodes
+//| (MaybeIdentifier MaybeNodeLabels MaybeProperties)
 MaybeNodeLabels ::= NodeLabels?
 
 MaybeIdentifier ::= Identifier?

@@ -207,7 +207,6 @@ public interface CypherTypes {
   IElementType L_IDENTIFIER = new CypherTokenType("l_identifier");
   IElementType L_IDENTIFIER_TEXT = new CypherTokenType("l_identifier_text");
   IElementType L_INTEGER = new CypherTokenType("l_integer");
-  IElementType L_SPACE = new CypherTokenType("l_space");
   IElementType L_STRING = new CypherTokenType("l_string");
   IElementType MINUS = new CypherTokenType("-");
   IElementType MODULO = new CypherTokenType("%");

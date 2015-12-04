@@ -9,6 +9,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import io.graphgeeks.intellij.plugin.cypher.CypherLanguage;
@@ -23,6 +24,9 @@ import org.jetbrains.annotations.NotNull;
  * @author dmitry.vrublevsky@graphgeeks.io
  */
 public class CypherParserDefinition implements ParserDefinition {
+    public static final TokenSet WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE);
+    public static final TokenSet COMMENTS = TokenSet.create(CypherTypes.LINECOMMENT, CypherTypes.BLOCKCOMMENT);
+    public static final TokenSet STRINGS = TokenSet.create(CypherTypes.STRING_LITERAL);
 
     public static final IFileElementType FILE =
             new IFileElementType(Language.findInstance(CypherLanguage.class));
@@ -46,19 +50,19 @@ public class CypherParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public TokenSet getWhitespaceTokens() {
-        return TokenSet.EMPTY;
+        return WHITE_SPACES;
     }
 
     @NotNull
     @Override
     public TokenSet getCommentTokens() {
-        return TokenSet.EMPTY;
+        return COMMENTS;
     }
 
     @NotNull
     @Override
     public TokenSet getStringLiteralElements() {
-        return TokenSet.EMPTY;
+        return STRINGS;
     }
 
     @NotNull
