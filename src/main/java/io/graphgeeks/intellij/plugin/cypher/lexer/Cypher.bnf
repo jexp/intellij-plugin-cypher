@@ -142,10 +142,9 @@
   ]
 }
 
-cypher ::= Statements *
+cypher ::= StatementItem *
 
-private Statements ::= !<<eof>> Statement ';' {pin=1 recoverWhile=statement_recover}
-private statement_recover ::= !(';')
+private StatementItem ::= !<<eof>> Statement ';'
 
 /*************************
  * Statement

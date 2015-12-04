@@ -3907,21 +3907,20 @@ public class CypherParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // !<<eof>> Statement ';'
-  static boolean Statements(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Statements")) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, null);
-    r = Statements_0(b, l + 1);
-    p = r; // pin = 1
-    r = r && report_error_(b, Statement(b, l + 1));
-    r = p && consumeToken(b, SEMICOLON) && r;
-    exit_section_(b, l, m, null, r, p, statement_recover_parser_);
-    return r || p;
+  static boolean StatementItem(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "StatementItem")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = StatementItem_0(b, l + 1);
+    r = r && Statement(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   // !<<eof>>
-  private static boolean Statements_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Statements_0")) return false;
+  private static boolean StatementItem_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "StatementItem_0")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NOT_, null);
     r = !eof(b, l + 1);
@@ -4112,12 +4111,12 @@ public class CypherParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // Statements *
+  // StatementItem *
   static boolean cypher(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cypher")) return false;
     int c = current_position_(b);
     while (true) {
-      if (!Statements(b, l + 1)) break;
+      if (!StatementItem(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "cypher", c)) break;
       c = current_position_(b);
     }
@@ -4138,30 +4137,4 @@ public class CypherParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  /* ********************************************************** */
-  // !(';')
-  static boolean statement_recover(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "statement_recover")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_, null);
-    r = !statement_recover_0(b, l + 1);
-    exit_section_(b, l, m, null, r, false, null);
-    return r;
-  }
-
-  // (';')
-  private static boolean statement_recover_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "statement_recover_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, SEMICOLON);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  final static Parser statement_recover_parser_ = new Parser() {
-    public boolean parse(PsiBuilder b, int l) {
-      return statement_recover(b, l + 1);
-    }
-  };
 }
