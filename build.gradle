@@ -1,5 +1,5 @@
 plugins {
-    id "org.jetbrains.intellij" version "0.0.27"
+    id "org.jetbrains.intellij" version "0.0.32"
 }
 
 apply plugin: 'org.jetbrains.intellij'
@@ -20,9 +20,9 @@ intellij {
     downloadSources true
 
     publish {
-        pluginId 'io.graphgeeks.intellij.plugin.cypher'
-        username ''
-        password ''
+        pluginId 'com.neueda4j.intellij.plugin.cypher'
+        username intellijUsername
+        password intellijPassword
         channel 'nightly'
     }
 }
