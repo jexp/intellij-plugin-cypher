@@ -7,14 +7,14 @@ Plugin provides [Cypher](http://www.opencypher.org/) language support for Intell
 
 TODO
 
-## Screenshots
-
-![cypher_syntax_highlight](screenshots/cypher_syntax_highlight.png)
-
 ## Known issues
 
 * Using keyword or function name, as variable will break lexer.
 * Error description is not really usable (internal naming).
+
+## Screenshots
+
+![cypher_syntax_highlight](screenshots/cypher_syntax_highlight.png)
 
 ## Development
 
