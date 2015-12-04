@@ -1,11 +1,15 @@
 Cypher Intellij Plugin
 ======================
 
-Plugin provides (Cypher)[http://www.opencypher.org/] language support for IntelliJ IDE.
+Plugin provides [Cypher](http://www.opencypher.org/) language support for IntelliJ IDE.
 
 ## Installation
 
 TODO
+
+## Screenshots
+
+![cypher_syntax_highlight](screenshots/cypher_syntax_highlight.png)
 
 ## Known issues
 
