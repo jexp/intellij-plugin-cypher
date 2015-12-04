@@ -1,8 +1,8 @@
 <idea-plugin version="2">
-  <id>io.graphgeeks.intellij.plugin.cypher</id>
+  <id>com.neueda4j.intellij.plugin.cypher</id>
   <name>Cypher</name>
   <version>0.0.1</version>
-  <vendor email="dmitry.vrublevsky@graphgeeks.io" url="https://graphgeeks.io">GraphGeeks</vendor>
+  <vendor email="dmitry@vrublevsky.me" url="https://vrublevsky.me">Dmitry Vrublevsky</vendor>
 
   <description><![CDATA[
       Cypher query language support.
@@ -22,14 +22,14 @@
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->
 
-    <fileTypeFactory implementation="io.graphgeeks.intellij.plugin.cypher.file.CypherFileTypeFactory"/>
+    <fileTypeFactory implementation="com.neueda4j.intellij.plugin.cypher.file.CypherFileTypeFactory"/>
     <lang.parserDefinition
-            language="Cypher" implementationClass="io.graphgeeks.intellij.plugin.cypher.parser.CypherParserDefinition"/>
+            language="Cypher" implementationClass="com.neueda4j.intellij.plugin.cypher.parser.CypherParserDefinition"/>
     <lang.syntaxHighlighterFactory
-            language="Cypher" implementationClass="io.graphgeeks.intellij.plugin.cypher.highlight.CypherSyntaxHighlighterFactory"/>
-    <lang.commenter language="Cypher" implementationClass="io.graphgeeks.intellij.plugin.cypher.commenter.CypherCommenter"/>
+            language="Cypher" implementationClass="com.neueda4j.intellij.plugin.cypher.highlight.CypherSyntaxHighlighterFactory"/>
+    <lang.commenter language="Cypher" implementationClass="com.neueda4j.intellij.plugin.cypher.commenter.CypherCommenter"/>
 
-    <colorSettingsPage implementation="io.graphgeeks.intellij.plugin.cypher.settings.CypherColorSettingsPage"/>
+    <colorSettingsPage implementation="com.neueda4j.intellij.plugin.cypher.settings.CypherColorSettingsPage"/>
   </extensions>
 
   <actions>
