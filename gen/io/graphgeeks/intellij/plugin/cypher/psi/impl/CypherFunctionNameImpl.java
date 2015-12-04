@@ -23,15 +23,9 @@ public class CypherFunctionNameImpl extends ASTWrapperPsiElement implements Cyph
   }
 
   @Override
-  @Nullable
-  public PsiElement getLIdentifier() {
-    return findChildByType(L_IDENTIFIER);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getLIdentifierText() {
-    return findChildByType(L_IDENTIFIER_TEXT);
+  @NotNull
+  public PsiElement getLFunction() {
+    return findNotNullChildByType(L_FUNCTION);
   }
 
 }

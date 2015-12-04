@@ -16,10 +16,10 @@ public interface CypherMatch extends PsiElement {
   @Nullable
   CypherWhere getWhere();
 
-  @Nullable
+  @NotNull
   PsiElement getKMatch();
 
   @Nullable
-  PsiElement getKOptionalMatch();
+  PsiElement getKOptional();
 
 }

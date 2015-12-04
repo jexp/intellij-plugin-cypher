@@ -11,6 +11,9 @@ public interface CypherOrder extends PsiElement {
   List<CypherSortItem> getSortItemList();
 
   @NotNull
-  PsiElement getKOrderBy();
+  PsiElement getKBy();
+
+  @NotNull
+  PsiElement getKOrder();
 
 }

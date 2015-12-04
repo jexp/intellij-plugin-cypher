@@ -30,8 +30,20 @@ public class CypherPeriodicCommitHintImpl extends ASTWrapperPsiElement implement
 
   @Override
   @NotNull
-  public PsiElement getKUsingPeriodicCommit() {
-    return findNotNullChildByType(K_USING_PERIODIC_COMMIT);
+  public PsiElement getKCommit() {
+    return findNotNullChildByType(K_COMMIT);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKPeriodic() {
+    return findNotNullChildByType(K_PERIODIC);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKUsing() {
+    return findNotNullChildByType(K_USING);
   }
 
 }

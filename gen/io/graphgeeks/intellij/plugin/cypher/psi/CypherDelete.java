@@ -10,10 +10,10 @@ public interface CypherDelete extends PsiElement {
   @NotNull
   List<CypherExpression> getExpressionList();
 
-  @Nullable
+  @NotNull
   PsiElement getKDelete();
 
   @Nullable
-  PsiElement getKDetachDelete();
+  PsiElement getKDetach();
 
 }

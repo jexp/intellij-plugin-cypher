@@ -29,15 +29,15 @@ public class CypherCreateImpl extends ASTWrapperPsiElement implements CypherCrea
   }
 
   @Override
-  @Nullable
+  @NotNull
   public PsiElement getKCreate() {
-    return findChildByType(K_CREATE);
+    return findNotNullChildByType(K_CREATE);
   }
 
   @Override
   @Nullable
-  public PsiElement getKCreateUnique() {
-    return findChildByType(K_CREATE_UNIQUE);
+  public PsiElement getKUnique() {
+    return findChildByType(K_UNIQUE);
   }
 
 }

@@ -19,16 +19,22 @@ public interface CypherLoadCSV extends PsiElement {
   @NotNull
   PsiElement getKAs();
 
+  @NotNull
+  PsiElement getKCsv();
+
   @Nullable
   PsiElement getKFieldterminator();
 
   @NotNull
   PsiElement getKFrom();
 
+  @Nullable
+  PsiElement getKHeaders();
+
   @NotNull
-  PsiElement getKLoadCsv();
+  PsiElement getKLoad();
 
   @Nullable
-  PsiElement getKWithHeaders();
+  PsiElement getKWith();
 
 }

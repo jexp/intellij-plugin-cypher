@@ -47,6 +47,12 @@ public class CypherLoadCSVImpl extends ASTWrapperPsiElement implements CypherLoa
   }
 
   @Override
+  @NotNull
+  public PsiElement getKCsv() {
+    return findNotNullChildByType(K_CSV);
+  }
+
+  @Override
   @Nullable
   public PsiElement getKFieldterminator() {
     return findChildByType(K_FIELDTERMINATOR);
@@ -59,15 +65,21 @@ public class CypherLoadCSVImpl extends ASTWrapperPsiElement implements CypherLoa
   }
 
   @Override
+  @Nullable
+  public PsiElement getKHeaders() {
+    return findChildByType(K_HEADERS);
+  }
+
+  @Override
   @NotNull
-  public PsiElement getKLoadCsv() {
-    return findNotNullChildByType(K_LOAD_CSV);
+  public PsiElement getKLoad() {
+    return findNotNullChildByType(K_LOAD);
   }
 
   @Override
   @Nullable
-  public PsiElement getKWithHeaders() {
-    return findChildByType(K_WITH_HEADERS);
+  public PsiElement getKWith() {
+    return findChildByType(K_WITH);
   }
 
 }

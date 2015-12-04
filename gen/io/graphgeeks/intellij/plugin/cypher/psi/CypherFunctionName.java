@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface CypherFunctionName extends PsiElement {
 
-  @Nullable
-  PsiElement getLIdentifier();
-
-  @Nullable
-  PsiElement getLIdentifierText();
+  @NotNull
+  PsiElement getLFunction();
 
 }

@@ -17,9 +17,15 @@ public interface CypherNodePropertyExistenceConstraintSyntax extends PsiElement 
   CypherPropertyExpression getPropertyExpression();
 
   @NotNull
-  PsiElement getKAssertExists();
+  PsiElement getKAssert();
 
   @NotNull
-  PsiElement getKConstraintOn();
+  PsiElement getKConstraint();
+
+  @NotNull
+  PsiElement getKExists();
+
+  @NotNull
+  PsiElement getKOn();
 
 }

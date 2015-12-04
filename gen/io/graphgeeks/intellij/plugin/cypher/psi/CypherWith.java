@@ -14,9 +14,9 @@ public interface CypherWith extends PsiElement {
   CypherWhere getWhere();
 
   @Nullable
-  PsiElement getKWith();
+  PsiElement getKDistinct();
 
-  @Nullable
-  PsiElement getKWithDistinct();
+  @NotNull
+  PsiElement getKWith();
 
 }

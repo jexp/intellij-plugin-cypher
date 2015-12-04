@@ -36,8 +36,20 @@ public class CypherCreateIndexImpl extends ASTWrapperPsiElement implements Cyphe
 
   @Override
   @NotNull
-  public PsiElement getKCreateIndexOn() {
-    return findNotNullChildByType(K_CREATE_INDEX_ON);
+  public PsiElement getKCreate() {
+    return findNotNullChildByType(K_CREATE);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKIndex() {
+    return findNotNullChildByType(K_INDEX);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKOn() {
+    return findNotNullChildByType(K_ON);
   }
 
 }

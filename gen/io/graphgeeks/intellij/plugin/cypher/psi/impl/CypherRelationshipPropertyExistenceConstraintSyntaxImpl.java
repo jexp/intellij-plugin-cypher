@@ -36,14 +36,26 @@ public class CypherRelationshipPropertyExistenceConstraintSyntaxImpl extends AST
 
   @Override
   @NotNull
-  public PsiElement getKAssertExists() {
-    return findNotNullChildByType(K_ASSERT_EXISTS);
+  public PsiElement getKAssert() {
+    return findNotNullChildByType(K_ASSERT);
   }
 
   @Override
   @NotNull
-  public PsiElement getKConstraintOn() {
-    return findNotNullChildByType(K_CONSTRAINT_ON);
+  public PsiElement getKConstraint() {
+    return findNotNullChildByType(K_CONSTRAINT);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKExists() {
+    return findNotNullChildByType(K_EXISTS);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKOn() {
+    return findNotNullChildByType(K_ON);
   }
 
 }

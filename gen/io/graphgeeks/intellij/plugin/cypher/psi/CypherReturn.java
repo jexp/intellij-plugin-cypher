@@ -11,9 +11,9 @@ public interface CypherReturn extends PsiElement {
   CypherReturnBody getReturnBody();
 
   @Nullable
-  PsiElement getKReturn();
+  PsiElement getKDistinct();
 
-  @Nullable
-  PsiElement getKReturnDistinct();
+  @NotNull
+  PsiElement getKReturn();
 
 }

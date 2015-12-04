@@ -14,9 +14,15 @@ public interface CypherRelationshipPropertyExistenceConstraintSyntax extends Psi
   CypherRelationshipPatternSyntax getRelationshipPatternSyntax();
 
   @NotNull
-  PsiElement getKAssertExists();
+  PsiElement getKAssert();
 
   @NotNull
-  PsiElement getKConstraintOn();
+  PsiElement getKConstraint();
+
+  @NotNull
+  PsiElement getKExists();
+
+  @NotNull
+  PsiElement getKOn();
 
 }

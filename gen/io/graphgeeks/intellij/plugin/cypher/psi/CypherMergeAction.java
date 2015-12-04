@@ -11,9 +11,12 @@ public interface CypherMergeAction extends PsiElement {
   CypherSetClause getSetClause();
 
   @Nullable
-  PsiElement getKOnCreate();
+  PsiElement getKCreate();
 
   @Nullable
-  PsiElement getKOnMatch();
+  PsiElement getKMatch();
+
+  @NotNull
+  PsiElement getKOn();
 
 }

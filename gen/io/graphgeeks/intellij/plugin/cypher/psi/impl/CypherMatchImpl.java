@@ -41,15 +41,15 @@ public class CypherMatchImpl extends ASTWrapperPsiElement implements CypherMatch
   }
 
   @Override
-  @Nullable
+  @NotNull
   public PsiElement getKMatch() {
-    return findChildByType(K_MATCH);
+    return findNotNullChildByType(K_MATCH);
   }
 
   @Override
   @Nullable
-  public PsiElement getKOptionalMatch() {
-    return findChildByType(K_OPTIONAL_MATCH);
+  public PsiElement getKOptional() {
+    return findChildByType(K_OPTIONAL);
   }
 
 }

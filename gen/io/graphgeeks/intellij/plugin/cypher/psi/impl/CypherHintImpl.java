@@ -42,20 +42,32 @@ public class CypherHintImpl extends ASTWrapperPsiElement implements CypherHint {
 
   @Override
   @Nullable
-  public PsiElement getKUsingIndex() {
-    return findChildByType(K_USING_INDEX);
+  public PsiElement getKIndex() {
+    return findChildByType(K_INDEX);
   }
 
   @Override
   @Nullable
-  public PsiElement getKUsingJoinOn() {
-    return findChildByType(K_USING_JOIN_ON);
+  public PsiElement getKJoin() {
+    return findChildByType(K_JOIN);
   }
 
   @Override
   @Nullable
-  public PsiElement getKUsingScan() {
-    return findChildByType(K_USING_SCAN);
+  public PsiElement getKOn() {
+    return findChildByType(K_ON);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getKScan() {
+    return findChildByType(K_SCAN);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKUsing() {
+    return findNotNullChildByType(K_USING);
   }
 
 }

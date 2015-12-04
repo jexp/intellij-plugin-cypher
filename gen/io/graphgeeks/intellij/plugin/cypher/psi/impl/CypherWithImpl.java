@@ -36,14 +36,14 @@ public class CypherWithImpl extends ASTWrapperPsiElement implements CypherWith {
 
   @Override
   @Nullable
-  public PsiElement getKWith() {
-    return findChildByType(K_WITH);
+  public PsiElement getKDistinct() {
+    return findChildByType(K_DISTINCT);
   }
 
   @Override
-  @Nullable
-  public PsiElement getKWithDistinct() {
-    return findChildByType(K_WITH_DISTINCT);
+  @NotNull
+  public PsiElement getKWith() {
+    return findNotNullChildByType(K_WITH);
   }
 
 }

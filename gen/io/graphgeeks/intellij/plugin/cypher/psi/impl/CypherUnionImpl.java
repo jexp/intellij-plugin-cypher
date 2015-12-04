@@ -30,14 +30,14 @@ public class CypherUnionImpl extends ASTWrapperPsiElement implements CypherUnion
 
   @Override
   @Nullable
-  public PsiElement getKUnion() {
-    return findChildByType(K_UNION);
+  public PsiElement getKAll() {
+    return findChildByType(K_ALL);
   }
 
   @Override
-  @Nullable
-  public PsiElement getKUnionAll() {
-    return findChildByType(K_UNION_ALL);
+  @NotNull
+  public PsiElement getKUnion() {
+    return findNotNullChildByType(K_UNION);
   }
 
 }

@@ -11,9 +11,9 @@ public interface CypherUnion extends PsiElement {
   CypherSingleQuery getSingleQuery();
 
   @Nullable
-  PsiElement getKUnion();
+  PsiElement getKAll();
 
-  @Nullable
-  PsiElement getKUnionAll();
+  @NotNull
+  PsiElement getKUnion();
 
 }

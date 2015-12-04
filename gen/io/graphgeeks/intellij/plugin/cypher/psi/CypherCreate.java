@@ -10,10 +10,10 @@ public interface CypherCreate extends PsiElement {
   @NotNull
   CypherPattern getPattern();
 
-  @Nullable
+  @NotNull
   PsiElement getKCreate();
 
   @Nullable
-  PsiElement getKCreateUnique();
+  PsiElement getKUnique();
 
 }

@@ -36,8 +36,20 @@ public class CypherDropIndexImpl extends ASTWrapperPsiElement implements CypherD
 
   @Override
   @NotNull
-  public PsiElement getKDropIndexOn() {
-    return findNotNullChildByType(K_DROP_INDEX_ON);
+  public PsiElement getKDrop() {
+    return findNotNullChildByType(K_DROP);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKIndex() {
+    return findNotNullChildByType(K_INDEX);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKOn() {
+    return findNotNullChildByType(K_ON);
   }
 
 }

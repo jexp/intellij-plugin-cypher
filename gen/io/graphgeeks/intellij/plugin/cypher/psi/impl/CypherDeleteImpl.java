@@ -29,15 +29,15 @@ public class CypherDeleteImpl extends ASTWrapperPsiElement implements CypherDele
   }
 
   @Override
-  @Nullable
+  @NotNull
   public PsiElement getKDelete() {
-    return findChildByType(K_DELETE);
+    return findNotNullChildByType(K_DELETE);
   }
 
   @Override
   @Nullable
-  public PsiElement getKDetachDelete() {
-    return findChildByType(K_DETACH_DELETE);
+  public PsiElement getKDetach() {
+    return findChildByType(K_DETACH);
   }
 
 }

@@ -11,6 +11,12 @@ public interface CypherPeriodicCommitHint extends PsiElement {
   CypherSignedIntegerLiteral getSignedIntegerLiteral();
 
   @NotNull
-  PsiElement getKUsingPeriodicCommit();
+  PsiElement getKCommit();
+
+  @NotNull
+  PsiElement getKPeriodic();
+
+  @NotNull
+  PsiElement getKUsing();
 
 }

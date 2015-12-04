@@ -20,9 +20,15 @@ public interface CypherUniqueConstraintSyntax extends PsiElement {
   PsiElement getKAssert();
 
   @NotNull
-  PsiElement getKConstraintOn();
+  PsiElement getKConstraint();
 
   @NotNull
-  PsiElement getKIsUnique();
+  PsiElement getKIs();
+
+  @NotNull
+  PsiElement getKOn();
+
+  @NotNull
+  PsiElement getKUnique();
 
 }

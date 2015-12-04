@@ -48,14 +48,26 @@ public class CypherUniqueConstraintSyntaxImpl extends ASTWrapperPsiElement imple
 
   @Override
   @NotNull
-  public PsiElement getKConstraintOn() {
-    return findNotNullChildByType(K_CONSTRAINT_ON);
+  public PsiElement getKConstraint() {
+    return findNotNullChildByType(K_CONSTRAINT);
   }
 
   @Override
   @NotNull
-  public PsiElement getKIsUnique() {
-    return findNotNullChildByType(K_IS_UNIQUE);
+  public PsiElement getKIs() {
+    return findNotNullChildByType(K_IS);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKOn() {
+    return findNotNullChildByType(K_ON);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKUnique() {
+    return findNotNullChildByType(K_UNIQUE);
   }
 
 }

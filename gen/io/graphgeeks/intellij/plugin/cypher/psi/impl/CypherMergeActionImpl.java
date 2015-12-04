@@ -30,14 +30,20 @@ public class CypherMergeActionImpl extends ASTWrapperPsiElement implements Cyphe
 
   @Override
   @Nullable
-  public PsiElement getKOnCreate() {
-    return findChildByType(K_ON_CREATE);
+  public PsiElement getKCreate() {
+    return findChildByType(K_CREATE);
   }
 
   @Override
   @Nullable
-  public PsiElement getKOnMatch() {
-    return findChildByType(K_ON_MATCH);
+  public PsiElement getKMatch() {
+    return findChildByType(K_MATCH);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKOn() {
+    return findNotNullChildByType(K_ON);
   }
 
 }

@@ -14,6 +14,12 @@ public interface CypherDropIndex extends PsiElement {
   CypherPropertyKeyName getPropertyKeyName();
 
   @NotNull
-  PsiElement getKDropIndexOn();
+  PsiElement getKDrop();
+
+  @NotNull
+  PsiElement getKIndex();
+
+  @NotNull
+  PsiElement getKOn();
 
 }

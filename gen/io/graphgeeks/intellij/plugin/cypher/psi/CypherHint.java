@@ -17,12 +17,18 @@ public interface CypherHint extends PsiElement {
   CypherPropertyKeyName getPropertyKeyName();
 
   @Nullable
-  PsiElement getKUsingIndex();
+  PsiElement getKIndex();
 
   @Nullable
-  PsiElement getKUsingJoinOn();
+  PsiElement getKJoin();
 
   @Nullable
-  PsiElement getKUsingScan();
+  PsiElement getKOn();
+
+  @Nullable
+  PsiElement getKScan();
+
+  @NotNull
+  PsiElement getKUsing();
 
 }

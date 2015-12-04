@@ -30,8 +30,14 @@ public class CypherOrderImpl extends ASTWrapperPsiElement implements CypherOrder
 
   @Override
   @NotNull
-  public PsiElement getKOrderBy() {
-    return findNotNullChildByType(K_ORDER_BY);
+  public PsiElement getKBy() {
+    return findNotNullChildByType(K_BY);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKOrder() {
+    return findNotNullChildByType(K_ORDER);
   }
 
 }

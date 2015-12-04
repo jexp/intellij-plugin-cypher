@@ -14,6 +14,12 @@ public interface CypherCreateIndex extends PsiElement {
   CypherPropertyKeyName getPropertyKeyName();
 
   @NotNull
-  PsiElement getKCreateIndexOn();
+  PsiElement getKCreate();
+
+  @NotNull
+  PsiElement getKIndex();
+
+  @NotNull
+  PsiElement getKOn();
 
 }

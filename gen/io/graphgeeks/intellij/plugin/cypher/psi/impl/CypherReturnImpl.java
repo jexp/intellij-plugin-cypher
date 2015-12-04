@@ -30,14 +30,14 @@ public class CypherReturnImpl extends ASTWrapperPsiElement implements CypherRetu
 
   @Override
   @Nullable
-  public PsiElement getKReturn() {
-    return findChildByType(K_RETURN);
+  public PsiElement getKDistinct() {
+    return findChildByType(K_DISTINCT);
   }
 
   @Override
-  @Nullable
-  public PsiElement getKReturnDistinct() {
-    return findChildByType(K_RETURN_DISTINCT);
+  @NotNull
+  public PsiElement getKReturn() {
+    return findNotNullChildByType(K_RETURN);
   }
 
 }
