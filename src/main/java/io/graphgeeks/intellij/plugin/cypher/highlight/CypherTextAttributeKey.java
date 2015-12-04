@@ -17,10 +17,15 @@ public class CypherTextAttributeKey {
     public static final TextAttributesKey BLOCK_COMMENT = createTextAttributesKey("CYPHER_BLOCK_COMMENT", DefaultLanguageHighlighterColors.BLOCK_COMMENT);
 
     public static final TextAttributesKey KEYWORD = createTextAttributesKey("CYPHER_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD);
-    public static final TextAttributesKey VARIABLE = createTextAttributesKey("CYPHER_VARIABLE", DefaultLanguageHighlighterColors.LOCAL_VARIABLE);
-    public static final TextAttributesKey FUNCTION_NAME = createTextAttributesKey("CYPHER_FUNCTION_NAME", DefaultLanguageHighlighterColors.FUNCTION_CALL);
+    public static final TextAttributesKey IDENTIFIER = createTextAttributesKey("CYPHER_IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
+    public static final TextAttributesKey FUNCTION_NAME = createTextAttributesKey("CYPHER_FUNCTION_NAME", DefaultLanguageHighlighterColors.KEYWORD);
 
     public static final TextAttributesKey SEMICOLON = createTextAttributesKey("CYPHER_SEMICOLON", DefaultLanguageHighlighterColors.SEMICOLON);
+    public static final TextAttributesKey OPERATION_SIGN = createTextAttributesKey("CYPHER_OPERATION", DefaultLanguageHighlighterColors.OPERATION_SIGN);
+    public static final TextAttributesKey PARENTHESES = createTextAttributesKey("CYPHER_PARENTHESES", DefaultLanguageHighlighterColors.PARENTHESES);
+    public static final TextAttributesKey BRACKETS = createTextAttributesKey("CYPHER_BRACKETS", DefaultLanguageHighlighterColors.BRACKETS);
+    public static final TextAttributesKey COMMA = createTextAttributesKey("CYPHER_COMMA", DefaultLanguageHighlighterColors.COMMA);
+    public static final TextAttributesKey DOT = createTextAttributesKey("CYPHER_DOT", DefaultLanguageHighlighterColors.DOT);
 
     public static final TextAttributesKey STRING = createTextAttributesKey("CYPHER_STRING", DefaultLanguageHighlighterColors.STRING);
     public static final TextAttributesKey NUMBER = createTextAttributesKey("CYPHER_NUMBER", DefaultLanguageHighlighterColors.NUMBER);

@@ -27,6 +27,7 @@
             language="Cypher" implementationClass="io.graphgeeks.intellij.plugin.cypher.parser.CypherParserDefinition"/>
     <lang.syntaxHighlighterFactory
             language="Cypher" implementationClass="io.graphgeeks.intellij.plugin.cypher.highlight.CypherSyntaxHighlighterFactory"/>
+    <colorSettingsPage implementation="io.graphgeeks.intellij.plugin.cypher.settings.CypherColorSettingsPage"/>
   </extensions>
 
   <actions>

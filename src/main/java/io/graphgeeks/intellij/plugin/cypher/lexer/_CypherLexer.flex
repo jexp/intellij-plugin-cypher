@@ -108,39 +108,39 @@ BLOCKCOMMENT="/"\*(.|\n)*\*"/"
 <YYINITIAL> {
   {WHITE_SPACE}             { return com.intellij.psi.TokenType.WHITE_SPACE; }
 
-  "("                       { return LEFTBRACE; }
-  ")"                       { return RIGHTBRACE; }
-  "{"                       { return LEFTCURLYBRACE; }
-  "}"                       { return RIGHTCURLYBRACE; }
-  "["                       { return LEFTSQUAREBRACE; }
-  "]"                       { return RIGHTSQUAREBRACE; }
   ";"                       { return SEMICOLON; }
-  ":"                       { return COLON; }
-  "."                       { return DOT; }
-  "="                       { return EQUAL; }
-  "<"                       { return LESSTHEN; }
-  ">"                       { return GREATHERTHEN; }
-  "+"                       { return PLUS; }
-  "-"                       { return MINUS; }
-  "*"                       { return MUL; }
-  "`"                       { return BACTICK; }
-  ","                       { return COMMA; }
-  "?"                       { return QUESTIONSIGN; }
-  "|"                       { return PIPE; }
-  ".."                      { return RANGE; }
-  "+="                      { return PLUSEQUALS; }
-  "<>"                      { return INVALIDNOTEQUALS; }
-  "!="                      { return NOTEQUALS; }
-  "<="                      { return LESSTHANEQUALS; }
-  ">="                      { return GREATERTHANEQUALS; }
-  "/"                       { return DIVIDE; }
-  "%"                       { return MODULO; }
-  "^"                       { return POW; }
-  "=~"                      { return REGEXMATCH; }
-  "()-["                    { return STARTRELPATTERN; }
-  "()<-["                   { return STARTRELPATTERNDIRECTED; }
-  "]-()"                    { return ENDRELPATTERN; }
-  "]->()"                   { return ENDRELPATTERNDIRECTED; }
+  "("                       { return PARENTHESE_OPEN; }
+  ")"                       { return PARENTHESE_CLOSE; }
+  "{"                       { return BRACKET_CURLYOPEN; }
+  "}"                       { return BRACKET_CURLYCLOSE; }
+  "["                       { return BRACKET_SQUAREOPEN; }
+  "]"                       { return BRACKET_SQUARECLOSE; }
+  ":"                       { return OP_COLON; }
+  "."                       { return OP_DOT; }
+  "="                       { return OP_EQUAL; }
+  "<"                       { return OP_LESSTHEN; }
+  ">"                       { return OP_GREATHERTHEN; }
+  "+"                       { return OP_PLUS; }
+  "-"                       { return OP_MINUS; }
+  "*"                       { return OP_MUL; }
+  "`"                       { return OP_BACTICK; }
+  ","                       { return OP_COMMA; }
+  "?"                       { return OP_QUESTIONSIGN; }
+  "|"                       { return OP_PIPE; }
+  ".."                      { return OP_RANGE; }
+  "+="                      { return OP_PLUSEQUALS; }
+  "<>"                      { return OP_INVALIDNOTEQUALS; }
+  "!="                      { return OP_NOTEQUALS; }
+  "<="                      { return OP_LESSTHANEQUALS; }
+  ">="                      { return OP_GREATERTHANEQUALS; }
+  "/"                       { return OP_DIVIDE; }
+  "%"                       { return OP_MODULO; }
+  "^"                       { return OP_POW; }
+  "=~"                      { return OP_REGEXMATCH; }
+  "()-["                    { return OP_STARTRELPATTERN; }
+  "()<-["                   { return OP_STARTRELPATTERNDIRECTED; }
+  "]-()"                    { return OP_ENDRELPATTERN; }
+  "]->()"                   { return OP_ENDRELPATTERNDIRECTED; }
 
   {K_MATCH}                 { return K_MATCH; }
   {K_RETURN}                { return K_RETURN; }
