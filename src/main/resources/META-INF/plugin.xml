@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.neueda4j.intellij.plugin.cypher</id>
   <name>Cypher</name>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
   <vendor email="dmitry@vrublevsky.me" url="https://vrublevsky.me">Dmitry Vrublevsky</vendor>
 
   <description><![CDATA[
@@ -9,6 +9,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      0.1.1 Bugfix - numbers can be used in identifiers
       0.1.0 Basic Cypher support - highlight, errors, commenting.
     ]]></change-notes>
 
