@@ -3,9 +3,19 @@ Cypher Intellij Plugin
 
 Plugin provides [Cypher](http://www.opencypher.org/) language support for IntelliJ IDE.
 
+It will use files with `.cyp` extension.
+Also Cypher language can be injected in any string (i.e. in Java).
+
 ## Installation
 
-TODO
+**Manual:**
+
+1. Navigate to [releases](https://github.com/FylmTM/intellij-plugin-cypher/releases) page.
+2. Pick most recent release.
+3. Download `Cypher.zip` file.
+4. Go to your Intellij IDE preferences `Plugins` -> `Install plugin from disk...`.
+5. Select downloaded plugin.
+6. Restart IDE.
 
 ## Known issues
 
